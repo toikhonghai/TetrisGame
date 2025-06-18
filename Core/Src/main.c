@@ -662,8 +662,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB12 PB13 PB14 PB15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  /*Configure GPIO pins : PB12 PB13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -675,7 +675,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PD6 PD7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
@@ -688,7 +697,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	static uint32_t last_press = 0;
 	uint32_t current_time = HAL_GetTick();
-	if (current_time - last_press > 10)
+	if (current_time - last_press > 100)
 	{
 		if (GPIO_Pin == GPIO_PIN_12)
 		{
@@ -698,11 +707,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		{
 			buttonRightPressed = 1;
 		}
-		else if (GPIO_Pin == GPIO_PIN_15)
+		else if (GPIO_Pin == GPIO_PIN_6)
 		{
 			buttonHardDropPressed = 1;
 		}
-		else if (GPIO_Pin == GPIO_PIN_14)
+		else if (GPIO_Pin == GPIO_PIN_7)
 		{
 			buttonRotatePressed = 1;
 		}
