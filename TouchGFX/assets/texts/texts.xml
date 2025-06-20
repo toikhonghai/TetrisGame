@@ -6,14 +6,26 @@
   <Texts>
     <TextGroup Id="Group1" />
     <TextGroup Id="Unsorted">
-      <Text Id="__SingleUse_E2HF" Alignment="Left" TypographyId="Small">
+      <Text Id="__SingleUse_KWSB" Alignment="Left" TypographyId="Default">
         <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_JBX8" Alignment="Left" TypographyId="Default">
+        <Translation Language="GB">0</Translation>
+      </Text>
+      <Text Id="__SingleUse_RHMJ" Alignment="Center" TypographyId="Small">
+        <Translation Language="GB">&lt;highestScore&gt;</Translation>
+      </Text>
+      <Text Id="__SingleUse_VG7T" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">Highscore</Translation>
+      </Text>
+      <Text Id="__SingleUse_E2HF" Alignment="Left" TypographyId="Small">
+        <Translation Language="GB">&lt;score&gt;</Translation>
       </Text>
     </TextGroup>
   </Texts>
   <Typographies>
     <Typography Id="Default" Font="verdana.ttf" Size="20" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
     <Typography Id="Large" Font="verdana.ttf" Size="40" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
-    <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" />
+    <Typography Id="Small" Font="verdana.ttf" Size="10" Bpp="4" IsVector="no" Direction="LTR" FallbackCharacter="?" WildcardCharacters="0123456789" />
   </Typographies>
 </TextDatabase>

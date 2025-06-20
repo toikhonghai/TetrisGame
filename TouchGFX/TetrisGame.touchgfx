@@ -50,10 +50,10 @@
           {
             "Type": "TextArea",
             "Name": "textScore",
-            "X": 220,
-            "Y": 32,
+            "X": 217,
+            "Y": 31,
             "Width": 6,
-            "Height": 10,
+            "Height": 12,
             "TextId": "__SingleUse_E2HF",
             "TextRotation": "0",
             "Color": {
@@ -61,7 +61,73 @@
               "Green": 151,
               "Blue": 46
             },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_KWSB"
+            }
+          },
+          {
+            "Type": "Container",
+            "Name": "nextBlock",
+            "X": 187,
+            "Y": 61,
+            "Width": 36,
+            "Height": 36,
+            "Components": []
+          },
+          {
+            "Type": "BoxWithBorder",
+            "Name": "boxWithBorder1",
+            "X": 176,
+            "Y": 108,
+            "Width": 58,
+            "Height": 45,
+            "Color": {
+              "Red": 48,
+              "Green": 39,
+              "Blue": 42
+            },
+            "BorderColor": {
+              "Red": 8,
+              "Green": 19,
+              "Blue": 24
+            },
+            "BorderSize": 2
+          },
+          {
+            "Type": "TextArea",
+            "Name": "HighScore",
+            "X": 181,
+            "Y": 119,
+            "Width": 49,
+            "Height": 12,
+            "TextId": "__SingleUse_VG7T",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 240,
+              "Green": 168,
+              "Blue": 48
+            },
             "AutoSize": true
+          },
+          {
+            "Type": "TextArea",
+            "Name": "highScore",
+            "X": 202,
+            "Y": 133,
+            "Width": 6,
+            "Height": 12,
+            "TextId": "__SingleUse_RHMJ",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 221,
+              "Green": 155,
+              "Blue": 47
+            },
+            "AutoSize": true,
+            "Wildcard1": {
+              "TextId": "__SingleUse_JBX8"
+            }
           }
         ],
         "Interactions": [

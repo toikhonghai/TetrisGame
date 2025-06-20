@@ -29,11 +29,36 @@ Screen1ViewBase::Screen1ViewBase()
 
     add(containerPlayArea);
 
-    textScore.setXY(220, 32);
+    textScore.setXY(217, 31);
     textScore.setColor(touchgfx::Color::getColorFromRGB(214, 151, 46));
     textScore.setLinespacing(0);
+    textScore.setWildcard(touchgfx::TypedText(T___SINGLEUSE_KWSB).getText());
+    textScore.resizeToCurrentText();
     textScore.setTypedText(touchgfx::TypedText(T___SINGLEUSE_E2HF));
     add(textScore);
+
+    nextBlock.setPosition(187, 61, 36, 36);
+    add(nextBlock);
+
+    boxWithBorder1.setPosition(176, 108, 58, 45);
+    boxWithBorder1.setColor(touchgfx::Color::getColorFromRGB(48, 39, 42));
+    boxWithBorder1.setBorderColor(touchgfx::Color::getColorFromRGB(8, 19, 24));
+    boxWithBorder1.setBorderSize(2);
+    add(boxWithBorder1);
+
+    HighScore.setXY(181, 119);
+    HighScore.setColor(touchgfx::Color::getColorFromRGB(240, 168, 48));
+    HighScore.setLinespacing(0);
+    HighScore.setTypedText(touchgfx::TypedText(T___SINGLEUSE_VG7T));
+    add(HighScore);
+
+    highScore.setXY(202, 133);
+    highScore.setColor(touchgfx::Color::getColorFromRGB(221, 155, 47));
+    highScore.setLinespacing(0);
+    highScore.setWildcard(touchgfx::TypedText(T___SINGLEUSE_JBX8).getText());
+    highScore.resizeToCurrentText();
+    highScore.setTypedText(touchgfx::TypedText(T___SINGLEUSE_RHMJ));
+    add(highScore);
 }
 
 Screen1ViewBase::~Screen1ViewBase()

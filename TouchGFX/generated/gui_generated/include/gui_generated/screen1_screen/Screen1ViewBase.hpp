@@ -11,6 +11,7 @@
 #include <touchgfx/widgets/ScalableImage.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/BoxWithBorder.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 
 class Screen1ViewBase : public touchgfx::View<Screen1Presenter>
@@ -51,7 +52,11 @@ protected:
     touchgfx::Container containerPlayArea;
     touchgfx::BoxWithBorder boxPlayArea;
     touchgfx::Container containerFallArea;
-    touchgfx::TextArea textScore;
+    touchgfx::TextAreaWithOneWildcard textScore;
+    touchgfx::Container nextBlock;
+    touchgfx::BoxWithBorder boxWithBorder1;
+    touchgfx::TextArea HighScore;
+    touchgfx::TextAreaWithOneWildcard highScore;
 
 private:
 

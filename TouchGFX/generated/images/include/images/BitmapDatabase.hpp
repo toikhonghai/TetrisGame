@@ -10,10 +10,17 @@ const uint16_t BITMAP_BACKGROUND_ID = 0;
 const uint16_t BITMAP_BLUE_BLOCK_ID = 1;
 const uint16_t BITMAP_CYAN_BLOCK_ID = 2;
 const uint16_t BITMAP_GREEN_BLOCK_ID = 3;
-const uint16_t BITMAP_PINK_BLOCK_ID = 4;
-const uint16_t BITMAP_PURPLE_BLOCK_ID = 5;
-const uint16_t BITMAP_RED_BLOCK_ID = 6;
-const uint16_t BITMAP_YELLOW_BLOCK_ID = 7;
+const uint16_t BITMAP_NBLUE_BLOCK_ID = 4;
+const uint16_t BITMAP_NCYAN_BLOCK_ID = 5;
+const uint16_t BITMAP_NGREEN_BLOCK_ID = 6;
+const uint16_t BITMAP_NPINK_BLOCK_ID = 7;
+const uint16_t BITMAP_NPURPLE_BLOCK_ID = 8;
+const uint16_t BITMAP_NRED_BLOCK_ID = 9;
+const uint16_t BITMAP_NYELLOW_BLOCK_ID = 10;
+const uint16_t BITMAP_PINK_BLOCK_ID = 11;
+const uint16_t BITMAP_PURPLE_BLOCK_ID = 12;
+const uint16_t BITMAP_RED_BLOCK_ID = 13;
+const uint16_t BITMAP_YELLOW_BLOCK_ID = 14;
 
 namespace BitmapDatabase
 {

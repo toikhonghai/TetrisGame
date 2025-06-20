@@ -17,6 +17,7 @@ Screen1View::Screen1View() {
     pieceX = 4;
     pieceY = 0;
     score = 0;
+    highestScore = 0;
     fallSpeed = 40;
     tempFallSpeed = fallSpeed;
     waitingForSpawn = false;
@@ -30,8 +31,13 @@ Screen1View::Screen1View() {
     tickCounter = 0;
     gameOverDelayCounter = 0;
     blockCount = 0;
+    nextBlockCount = 0;
+    check = true;
     piece = piecePool[getRandomPiece()];
-    generatePiece(piece);
+	generatePiece(piece);
+	nextPiece = currentPiece;
+	piece = piecePool[getRandomPiece()];
+	generatePiece(piece);
 }
 
 void Screen1View::initRandom() {
@@ -195,18 +201,32 @@ void Screen1View::savePieceToGrid(){
 }
 
 void Screen1View::spawnNewPiece(){
+	if(check){
+		tmpPiece = currentPiece;
+		piece = piecePool[getRandomPiece()];
+		generatePiece(piece);
+		nextPiece = currentPiece;
+		currentPiece = tmpPiece;
+		drawNextBlock();
+		updateScreen();
+		check = false;
+	}
     if(waitingForSpawn){
         spawnDelayCounter++;
         if(spawnDelayCounter >= 30){
-            piece = piecePool[getRandomPiece()];
-            generatePiece(piece);
+        	currentPiece = nextPiece;
             pieceX = 4;
             pieceY = 0;
             waitingForSpawn = false;
             spawnDelayCounter = 0;
+//            piece = piecePool[getRandomPiece()];
+//            generatePiece(piece);
+//            nextPiece = currentPiece;
+            currentPiece = nextPiece;
             if(checkCollision()){
                 gameOver = true;
             }
+            check = true;
         }
     }
 }
@@ -229,7 +249,7 @@ void Screen1View::clearLines(){
             for(int x = 0; x<10; x++){
                 grid[0][x] = 0;
             }
-            score += 100;
+            score += 1;
             y++;
             adjustFallSpeed();
         }
@@ -237,7 +257,7 @@ void Screen1View::clearLines(){
 }
 
 void Screen1View::adjustFallSpeed(){
-    int newFallSpeed = 40 - (score/100) * 4;
+    int newFallSpeed = 40 - (score) * 4;
     fallSpeed = newFallSpeed < 10 ? 10 : newFallSpeed;
 }
 
@@ -270,7 +290,7 @@ void Screen1View::handleGameLogic() {
             savePieceToGrid();
             waitingForSpawn = true;
             spawnDelayCounter = 0;
-            score += 10;
+//            score += 1;
         }
         movedDown = false;
     }
@@ -283,7 +303,7 @@ void Screen1View::handleGameLogic() {
         savePieceToGrid();
         waitingForSpawn = true;
         spawnDelayCounter = 0;
-        score += 20;
+//        score += 2;
         hardDrop = false;
     }
 
@@ -385,6 +405,39 @@ void Screen1View::drawBlock(int x, int y, int color){
     blockCount++;
 }
 
+void Screen1View::drawNextBlock(){
+	nextBlock.removeAll();
+	nextBlockCount = 0;
+	for(int i = 0; i<4; i++){
+		for(int j = 0; j<4; j++){
+			if(nextPiece.shape[i][j] && nextBlockCount < 16){
+				touchgfx::Image &block = nextBlockImages[nextBlockCount];
+				if(nextPiece.color == 0x00BFFF){
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NBLUE_BLOCK_ID));
+				} else if (nextPiece.color == 0xFFFF00) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NYELLOW_BLOCK_ID));
+				} else if (nextPiece.color == 0xFF00FF) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NPINK_BLOCK_ID));
+				} else if (nextPiece.color == 0x00FF00) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NGREEN_BLOCK_ID));
+				} else if (nextPiece.color == 0x800080) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NPURPLE_BLOCK_ID));
+				} else if (nextPiece.color == 0xFF0000) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NRED_BLOCK_ID));
+				} else if (nextPiece.color == 0x00FFFF) {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NCYAN_BLOCK_ID));
+				} else {
+					block.setBitmap(touchgfx::Bitmap(BITMAP_NBLUE_BLOCK_ID));
+				}
+				block.setPosition(j*9, i*9, 9, 9);
+				nextBlock.add(block);
+				nextBlockCount++;
+			}
+		}
+	}
+	nextBlock.invalidate();
+}
+
 void Screen1View::updateScreen(){
     containerFallArea.removeAll();
     blockCount = 0;
@@ -406,7 +459,16 @@ void Screen1View::updateScreen(){
             }
         }
     }
+
     containerFallArea.invalidate();
+    Unicode::snprintf(textScoreBuffer, TEXTSCORE_SIZE, "%d", score);
+    textScore.setWildcard1(textScoreBuffer);
+    textScore.invalidate();
+
+    Unicode::snprintf(highScoreBuffer, HIGHSCORE_SIZE, "%d", highestScore);
+    highScore.setWildcard1(highScoreBuffer);
+    highScore.invalidate();
+
     if(gameOver){
         gameOverDelayCounter = 0;
     }
@@ -474,8 +536,8 @@ void Screen1View::handleTickEvent(){
         }
         if (buttonHardDropPressed)
         {
-            fallSpeed = 5; // Rơi nhanh hơn
-            movePieceDown(); // Soft drop
+            fallSpeed = 5;
+            movePieceDown();
             buttonHardDropPressed = 0;
         }
         else
@@ -494,6 +556,9 @@ void Screen1View::handleTickEvent(){
     else {
         gameOverDelayCounter++;
         if(gameOverDelayCounter >= 300){
+        	if(score > highestScore) {
+				highestScore = score;
+			}
             for(int i = 0; i<24; i++){
                 for(int j = 0; j<10; j++){
                     grid[i][j] = 0;

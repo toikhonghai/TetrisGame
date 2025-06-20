@@ -15,6 +15,8 @@ const int colors[7] = {0x00BFFF, 0xFFFF00, 0xFF00FF, 0x00FF00, 0x800080, 0xFF000
 const char piecePool[7] = {'Z', 'S', 'L', 'J', 'O', 'T', 'I'};
 
 #define MAX_BLOCKS 300
+#define TEXTSCORE_SIZE 10
+#define HIGHSCORE_SIZE 10
 extern volatile uint8_t buttonLeftPressed;
 extern volatile uint8_t buttonRightPressed;
 extern volatile uint8_t buttonRotatePressed;
@@ -43,8 +45,11 @@ public:
 protected:
     int grid[24][10];
     Piece currentPiece;
+    Piece nextPiece;
+    Piece tmpPiece;
     int pieceX, pieceY;
     int score;
+    int highestScore;
     int fallSpeed;
     int tempFallSpeed;
     bool waitingForSpawn;
@@ -56,10 +61,18 @@ protected:
     int gameOverDelayCounter;
     int counter;
     uint32_t randomSeed;
+    bool check;
 
     // Thêm array blocks và blockCount
     touchgfx::Image blocks[MAX_BLOCKS];
     int blockCount;
+
+    touchgfx::Image nextBlockImages[16];
+    int nextBlockCount;
+
+    touchgfx::Unicode::UnicodeChar textScoreBuffer[TEXTSCORE_SIZE];
+    touchgfx::Unicode::UnicodeChar highScoreBuffer[HIGHSCORE_SIZE];
+
 
     void generatePiece(char pieceType);
     void rotateClockwise(uint8_t matrix[4][4]);
@@ -72,6 +85,7 @@ protected:
     void clearLines();
     void updateScreen();
     void drawBlock(int x, int y, int color);
+    void drawNextBlock();
     void adjustFallSpeed();
 };
 #endif // SCREEN1VIEW_HPP

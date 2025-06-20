@@ -11,33 +11,36 @@
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:588:18:virtual void touchgfx::Drawable::moveTo(int16_t, int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:703:18:virtual void touchgfx::Drawable::setupDrawChain(const touchgfx::Rect&, touchgfx::Drawable**)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:60:6:virtual void Screen1View::tearDownScreen()	1
-../../TouchGFX/gui/include/gui/screen1_screen/Screen1View.hpp:27:13:Screen1View::~Screen1View()	2
-../../TouchGFX/gui/include/gui/screen1_screen/Screen1View.hpp:27:13:virtual Screen1View::~Screen1View()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:66:6:virtual void Screen1View::tearDownScreen()	1
+../../TouchGFX/gui/include/gui/screen1_screen/Screen1View.hpp:29:13:Screen1View::~Screen1View()	3
+../../TouchGFX/gui/include/gui/screen1_screen/Screen1View.hpp:29:13:virtual Screen1View::~Screen1View()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:121:18:virtual void touchgfx::Drawable::invalidateContent() const	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:45:18:virtual void touchgfx::Widget::getLastChild(int16_t, int16_t, touchgfx::Drawable**)	3
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:37:6:void Screen1View::initRandom()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:46:10:uint32_t Screen1View::customRandom()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:51:5:int Screen1View::getRandomPiece()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:64:6:void Screen1View::generatePiece(char)	9
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:9:1:Screen1View::Screen1View()	2
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:123:6:bool Screen1View::checkCollision()	8
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:197:6:virtual void Screen1View::spawnNewPiece()	4
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:138:6:bool Screen1View::checkCollisionDown()	7
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:153:6:bool Screen1View::checkCollisionLeft()	7
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:168:6:bool Screen1View::checkCollisionRight()	7
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:183:6:void Screen1View::savePieceToGrid()	6
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:239:6:void Screen1View::adjustFallSpeed()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:214:6:void Screen1View::clearLines()	6
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:244:6:void Screen1View::rotateClockwise(uint8_t (*)[4])	3
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:359:6:void Screen1View::drawBlock(int, int, int)	9
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:388:6:void Screen1View::updateScreen()	12
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:55:6:virtual void Screen1View::setupScreen()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:263:6:void Screen1View::handleGameLogic()	16
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:419:6:virtual void Screen1View::updatePiecePosition()	3
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:427:6:virtual void Screen1View::movePieceDown()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:433:6:virtual void Screen1View::movePieceLeft()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:439:6:virtual void Screen1View::movePieceRight()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:445:6:virtual void Screen1View::rotatePiece()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:451:6:virtual void Screen1View::hardDropPiece()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:457:6:virtual void Screen1View::handleTickEvent()	8
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:233:10:void touchgfx::Drawable::setPosition(int16_t, int16_t, int16_t, int16_t)	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Image.hpp:50:5:touchgfx::Image::Image(const touchgfx::Bitmap&)	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:43:6:void Screen1View::initRandom()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:52:10:uint32_t Screen1View::customRandom()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:57:5:int Screen1View::getRandomPiece()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:70:6:void Screen1View::generatePiece(char)	9
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:9:1:Screen1View::Screen1View()	3
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:129:6:bool Screen1View::checkCollision()	8
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:144:6:bool Screen1View::checkCollisionDown()	7
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:159:6:bool Screen1View::checkCollisionLeft()	7
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:174:6:bool Screen1View::checkCollisionRight()	7
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:189:6:void Screen1View::savePieceToGrid()	6
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:259:6:void Screen1View::adjustFallSpeed()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:234:6:void Screen1View::clearLines()	6
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:264:6:void Screen1View::rotateClockwise(uint8_t (*)[4])	3
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:379:6:void Screen1View::drawBlock(int, int, int)	9
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:408:6:void Screen1View::drawNextBlock()	12
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:441:6:void Screen1View::updateScreen()	12
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:61:6:virtual void Screen1View::setupScreen()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:203:6:virtual void Screen1View::spawnNewPiece()	5
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:283:6:void Screen1View::handleGameLogic()	16
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:481:6:virtual void Screen1View::updatePiecePosition()	3
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:489:6:virtual void Screen1View::movePieceDown()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:495:6:virtual void Screen1View::movePieceLeft()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:501:6:virtual void Screen1View::movePieceRight()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:507:6:virtual void Screen1View::rotatePiece()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:513:6:virtual void Screen1View::hardDropPiece()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen1_screen/Screen1View.cpp:519:6:virtual void Screen1View::handleTickEvent()	9
