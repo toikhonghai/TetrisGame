@@ -9,16 +9,30 @@
 ../../TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:16:13:FrontendApplicationBase::~FrontendApplicationBase()	1
 ../../TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:18:18:virtual void FrontendApplicationBase::changeToStartScreen()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp:35:18:virtual void touchgfx::NoTransition::handleTickEvent()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:101:18:virtual void touchgfx::BlockTransition::tearDown()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:105:18:virtual void touchgfx::BlockTransition::init()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:114:18:virtual void touchgfx::BlockTransition::invalidate()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:32:7:touchgfx::BlockTransition::~BlockTransition()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp:31:7:touchgfx::NoTransition::~NoTransition()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:449:18:void touchgfx::Callback<dest_type, void, void, void>::execute() [with dest_type = FrontendApplicationBase]	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:459:18:bool touchgfx::Callback<dest_type, void, void, void>::isValid() const [with dest_type = FrontendApplicationBase]	3
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:32:7:virtual touchgfx::BlockTransition::~BlockTransition()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/NoTransition.hpp:31:7:virtual touchgfx::NoTransition::~NoTransition()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:424:8:virtual touchgfx::Callback<FrontendApplicationBase>::~Callback()	1
 ../../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp:43:7:virtual touchgfx::MVPApplication::~MVPApplication()	1
 ../../TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp:16:13:virtual FrontendApplicationBase::~FrontendApplicationBase()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp:89:18:virtual void touchgfx::Transition::invalidate()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:62:18:virtual void touchgfx::BlockTransition::handleTickEvent()	6
 ../../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp:59:18:virtual void touchgfx::MVPApplication::handlePendingScreenTransition()	3
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:42:6:void FrontendApplicationBase::gotoScreen1ScreenNoTransitionImpl()	7
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:59:6:void FrontendApplicationBase::gotoScreen2ScreenNoTransitionImpl()	7
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/HAL.hpp:308:17:static touchgfx::LCD& touchgfx::HAL::lcd()	3
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:17:1:FrontendApplicationBase::FrontendApplicationBase(Model&, FrontendHeap&)	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:36:6:void FrontendApplicationBase::gotoScreen1ScreenNoTransition()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/BlockTransition.hpp:38:5:touchgfx::BlockTransition::BlockTransition()	2
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:21:1:FrontendApplicationBase::FrontendApplicationBase(Model&, FrontendHeap&)	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:40:6:void FrontendApplicationBase::gotoScreen1ScreenBlockTransition()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:53:6:void FrontendApplicationBase::gotoScreen2ScreenNoTransition()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:64:6:void FrontendApplicationBase::gotoScreen2ScreenBlockTransition()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:77:6:void FrontendApplicationBase::gotoScreen3ScreenBlockTransition()	1
+../../Middlewares/ST/touchgfx/framework/include/common/AbstractPartition.hpp:135:8:T& touchgfx::AbstractPartition::at(uint16_t) [with T = touchgfx::BlockTransition]	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:83:6:void FrontendApplicationBase::gotoScreen3ScreenBlockTransitionImpl()	7
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:70:6:void FrontendApplicationBase::gotoScreen2ScreenBlockTransitionImpl()	7
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/common/FrontendApplicationBase.cpp:46:6:void FrontendApplicationBase::gotoScreen1ScreenBlockTransitionImpl()	7

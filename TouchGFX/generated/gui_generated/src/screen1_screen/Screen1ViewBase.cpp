@@ -70,28 +70,3 @@ void Screen1ViewBase::setupScreen()
 {
 
 }
-
-void Screen1ViewBase::handleTickEvent()
-{
-    //Interaction1
-    //When every N tick call virtual function
-    //Call updatePiecePosition
-    updatePiecePosition();
-
-    //Interaction2
-    //When every N tick call virtual function
-    //Call spawnNewPiece
-    spawnNewPiece();
-}
-
-void Screen1ViewBase::handleKeyEvent(uint8_t key)
-{
-    if(0 == key)
-    {
-        //Interaction3
-        //When hardware button 0 clicked call virtual function
-        //Call movePiece
-        movePiece();
-    
-    }
-}

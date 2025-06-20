@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <main.h>
 
+int Screen1View::highestScore = 0;
+
 Screen1View::Screen1View() {
     initRandom();
     for(int i = 0; i<24; i++){
@@ -17,8 +19,8 @@ Screen1View::Screen1View() {
     pieceX = 4;
     pieceY = 0;
     score = 0;
-    highestScore = 0;
-    fallSpeed = 40;
+    //highestScore = 0;
+    fallSpeed = 80;
     tempFallSpeed = fallSpeed;
     waitingForSpawn = false;
     spawnDelayCounter = 0;
@@ -559,20 +561,24 @@ void Screen1View::handleTickEvent(){
         	if(score > highestScore) {
 				highestScore = score;
 			}
-            for(int i = 0; i<24; i++){
-                for(int j = 0; j<10; j++){
-                    grid[i][j] = 0;
-                }
-            }
-            pieceX = 4;
-            pieceY = 0;
-            score = 0;
-            gameOver = false;
-            waitingForSpawn = true;
-            spawnDelayCounter = 0;
-            piece = piecePool[3];
-            generatePiece(piece);
-            updateScreen();
+        	gotoGameOverScreen();
+//            for(int i = 0; i<24; i++){
+//                for(int j = 0; j<10; j++){
+//                    grid[i][j] = 0;
+//                }
+//            }
+//            pieceX = 4;
+//            pieceY = 0;
+//            score = 0;
+//            gameOver = false;
+//            waitingForSpawn = true;
+//            spawnDelayCounter = 0;
+//            piece = piecePool[3];
+//            generatePiece(piece);
+//            updateScreen();
         }
     }
+}
+void Screen1View:: gotoGameOverScreen(){
+	application().gotoScreen3ScreenBlockTransition();
 }

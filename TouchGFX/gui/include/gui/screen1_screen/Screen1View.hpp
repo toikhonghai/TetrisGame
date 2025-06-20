@@ -41,6 +41,7 @@ public:
     uint32_t customRandom();
 	void initRandom();
 	int getRandomPiece();
+	void gotoGameOverScreen();
 
 protected:
     int grid[24][10];
@@ -49,7 +50,7 @@ protected:
     Piece tmpPiece;
     int pieceX, pieceY;
     int score;
-    int highestScore;
+    static int highestScore ;
     int fallSpeed;
     int tempFallSpeed;
     bool waitingForSpawn;

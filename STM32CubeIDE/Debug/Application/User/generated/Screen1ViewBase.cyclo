@@ -23,21 +23,16 @@
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:127:18:virtual void touchgfx::TextArea::setXBaselineY(int16_t, int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:403:41:virtual const touchgfx::Unicode::UnicodeChar* touchgfx::TextArea::getWildcard2() const	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:84:41:virtual const touchgfx::Unicode::UnicodeChar* touchgfx::TextAreaWithOneWildcard::getWildcard1() const	1
-../../TouchGFX/generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:29:18:virtual void Screen1ViewBase::updatePiecePosition()	1
-../../TouchGFX/generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:33:18:virtual void Screen1ViewBase::spawnNewPiece()	1
-../../TouchGFX/generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:37:18:virtual void Screen1ViewBase::movePiece()	1
 ../../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:touchgfx::View<Screen1Presenter>::~View()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:62:7:touchgfx::TextAreaWithOneWildcard::~TextAreaWithOneWildcard()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:64:1:Screen1ViewBase::~Screen1ViewBase()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:69:6:virtual void Screen1ViewBase::setupScreen()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:74:6:virtual void Screen1ViewBase::handleTickEvent()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:64:1:Screen1ViewBase::~Screen1ViewBase()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:69:6:virtual void Screen1ViewBase::setupScreen()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/TypedText.hpp:65:13:virtual touchgfx::TypedText::~TypedText()	1
 ../../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:virtual touchgfx::View<Screen1Presenter>::~View()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:62:7:virtual touchgfx::TextAreaWithOneWildcard::~TextAreaWithOneWildcard()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:64:1:virtual Screen1ViewBase::~Screen1ViewBase()	1
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:64:1:virtual Screen1ViewBase::~Screen1ViewBase()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:121:18:virtual void touchgfx::Drawable::invalidateContent() const	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:43:18:virtual void touchgfx::TextAreaWithWildcardBase::invalidateContent() const	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:87:6:virtual void Screen1ViewBase::handleKeyEvent(uint8_t)	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:45:18:virtual void touchgfx::Widget::getLastChild(int16_t, int16_t, touchgfx::Drawable**)	3
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:111:18:virtual void touchgfx::TextArea::setBaselineY(int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextAreaWithWildcard.hpp:49:36:virtual touchgfx::TextArea::BoundingArea touchgfx::TextAreaWithWildcardBase::calculateBoundingArea() const	1
@@ -46,4 +41,4 @@ C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_scre
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:233:10:void touchgfx::Drawable::setPosition(int16_t, int16_t, int16_t, int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Box.hpp:33:5:touchgfx::Box::Box()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/TextArea.hpp:43:5:touchgfx::TextArea::TextArea()	1
-C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:9:1:Screen1ViewBase::Screen1ViewBase()	3
+D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen1_screen/Screen1ViewBase.cpp:9:1:Screen1ViewBase::Screen1ViewBase()	3

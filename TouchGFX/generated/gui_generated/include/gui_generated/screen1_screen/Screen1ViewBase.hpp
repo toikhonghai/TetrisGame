@@ -20,24 +20,6 @@ public:
     Screen1ViewBase();
     virtual ~Screen1ViewBase();
     virtual void setupScreen();
-    virtual void handleTickEvent();
-    virtual void handleKeyEvent(uint8_t key);
-
-    /*
-     * Virtual Action Handlers
-     */
-    virtual void updatePiecePosition()
-    {
-        // Override and implement this function in Screen1
-    }
-    virtual void spawnNewPiece()
-    {
-        // Override and implement this function in Screen1
-    }
-    virtual void movePiece()
-    {
-        // Override and implement this function in Screen1
-    }
 
 protected:
     FrontendApplication& application() {
