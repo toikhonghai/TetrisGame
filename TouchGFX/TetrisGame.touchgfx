@@ -132,36 +132,110 @@
         ],
         "Interactions": [
           {
-            "InteractionName": "Interaction1",
+            "InteractionName": "changeScrGameOver",
             "HasCompletedTrigger": true,
             "Trigger": {
-              "Type": "TriggerOnEveryTick",
-              "TickCount": 1
+              "Type": "TriggerInteractionCompleted"
             },
             "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "updatePiecePosition"
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionBlock",
+              "ActionComponent": "Screen3"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen2",
+        "Components": [
+          {
+            "Type": "ScalableImage",
+            "Name": "HomeBackgro",
+            "Width": 240,
+            "Height": 320,
+            "Filename": "Screenshot 2025-06-20 153241.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Button",
+            "Name": "buttonPlay",
+            "X": 60,
+            "Y": 252,
+            "Width": 120,
+            "Height": 36,
+            "Pressed": "Screenshot 2025-06-20 153932.png",
+            "Released": "Screenshot 2025-06-20 153932.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "buttonPlay"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionBlock",
+              "ActionComponent": "Screen1"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "Screen3",
+        "Components": [
+          {
+            "Type": "ScalableImage",
+            "Name": "GameOverBackground",
+            "Width": 240,
+            "Height": 320,
+            "Filename": "Screenshot 2025-06-20 214554.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Button",
+            "Name": "buttonRetry",
+            "Y": 243,
+            "Width": 100,
+            "Height": 49,
+            "Pressed": "Screenshot 2025-06-20 221717.png",
+            "Released": "Screenshot 2025-06-20 221717.png"
+          },
+          {
+            "Type": "Button",
+            "Name": "buttonExit",
+            "X": 140,
+            "Y": 244,
+            "Width": 100,
+            "Height": 48,
+            "Pressed": "Screenshot 2025-06-20 221754.png",
+            "Released": "Screenshot 2025-06-20 221754.png"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "changeScrHome",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "buttonExit"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionBlock",
+              "ActionComponent": "Screen2"
             }
           },
           {
-            "InteractionName": "Interaction2",
+            "InteractionName": "changScrPlay",
             "Trigger": {
-              "Type": "TriggerOnEveryTick",
-              "TickCount": 1
+              "Type": "TriggerClicked",
+              "TriggerComponent": "buttonRetry"
             },
             "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "spawnNewPiece"
-            }
-          },
-          {
-            "InteractionName": "Interaction3",
-            "Trigger": {
-              "Type": "TriggerPhysicalButtonClicked"
-            },
-            "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "movePiece"
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionBlock",
+              "ActionComponent": "Screen1"
             }
           }
         ]
@@ -174,7 +248,7 @@
       "Height": 320
     },
     "SelectedColorDepth": 16,
-    "StartupScreenName": "Screen1",
+    "StartupScreenName": "Screen2",
     "SelectedStartupLanguage": "GB",
     "TouchGfxPath": "../Middlewares/ST/touchgfx",
     "UIPath": ".",

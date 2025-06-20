@@ -1,5 +1,5 @@
 Middlewares/FreeRTOS/queue.o: \
- C:/TouchGFXProjects/TetrisGame/Middlewares/Third_Party/FreeRTOS/Source/queue.c \
+ D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/Middlewares/Third_Party/FreeRTOS/Source/queue.c \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../../Core/Inc/FreeRTOSConfig.h \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \

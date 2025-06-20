@@ -96,6 +96,10 @@ volatile uint8_t buttonLeftPressed = 0;
 volatile uint8_t buttonRightPressed = 0;
 volatile uint8_t buttonRotatePressed = 0;
 volatile uint8_t buttonHardDropPressed = 0;
+volatile uint8_t buttonPlayClick = 0;
+volatile uint8_t buttonRetryClick = 0;
+volatile uint8_t buttonExitClick = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -697,15 +701,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	static uint32_t last_press = 0;
 	uint32_t current_time = HAL_GetTick();
-	if (current_time - last_press > 100)
+	if (current_time - last_press > 200)
 	{
 		if (GPIO_Pin == GPIO_PIN_12)
 		{
 			buttonLeftPressed = 1;
+			buttonRetryClick = 1;
 		}
 		else if (GPIO_Pin == GPIO_PIN_13)
 		{
 			buttonRightPressed = 1;
+			buttonExitClick = 1;
 		}
 		else if (GPIO_Pin == GPIO_PIN_6)
 		{
@@ -714,6 +720,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		else if (GPIO_Pin == GPIO_PIN_7)
 		{
 			buttonRotatePressed = 1;
+			buttonPlayClick =1;
 		}
 		last_press = current_time;
 	}
