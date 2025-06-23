@@ -5,11 +5,15 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <main.h>
+
 #include <cmsis_os.h>
 
 extern osMessageQueueId_t myQueue01Handle;
 
-int Screen1View::highestScore = 0;
+
+#ifndef HIGHSCORE_FLASH_ADDR
+#define HIGHSCORE_FLASH_ADDR 0x080E0000 // Sector 11, STM32F429ZIT6
+#endif
 
 Screen1View::Screen1View()
 {
@@ -25,8 +29,10 @@ Screen1View::Screen1View()
     pieceX = 4;
     pieceY = 0;
     score = 0;
+
     // highestScore = 0;
     fallSpeed = 40;
+
     tempFallSpeed = fallSpeed;
     waitingForSpawn = false;
     spawnDelayCounter = 0;
@@ -41,10 +47,12 @@ Screen1View::Screen1View()
     blockCount = 0;
     nextBlockCount = 0;
     check = true;
+
     piece = piecePool[getRandomPiece()];
     generatePiece(piece);
     nextPiece = currentPiece;
     piece = piecePool[getRandomPiece()];
+
     generatePiece(piece);
 }
 
@@ -248,7 +256,9 @@ void Screen1View::spawnNewPiece()
     if (check)
     {
         tmpPiece = currentPiece;
+
         piece = piecePool[getRandomPiece()];
+
         generatePiece(piece);
         nextPiece = currentPiece;
         currentPiece = tmpPiece;
@@ -266,9 +276,11 @@ void Screen1View::spawnNewPiece()
             pieceY = 0;
             waitingForSpawn = false;
             spawnDelayCounter = 0;
+
             //            piece = piecePool[getRandomPiece()];
             //            generatePiece(piece);
             //            nextPiece = currentPiece;
+
             currentPiece = nextPiece;
             if (checkCollision())
             {
@@ -314,7 +326,9 @@ void Screen1View::clearLines()
 
 void Screen1View::adjustFallSpeed()
 {
+
     int newFallSpeed = 40 - (score) * 4;
+
     fallSpeed = newFallSpeed < 10 ? 10 : newFallSpeed;
 }
 
@@ -354,6 +368,7 @@ void Screen1View::handleGameLogic()
             waitingForSpawn = true;
             spawnDelayCounter = 0;
             //            score += 1;
+
         }
         movedDown = false;
     }
@@ -369,6 +384,7 @@ void Screen1View::handleGameLogic()
         waitingForSpawn = true;
         spawnDelayCounter = 0;
         //        score += 2;
+
         hardDrop = false;
     }
 
@@ -597,7 +613,8 @@ void Screen1View::updateScreen()
     textScore.setWildcard1(textScoreBuffer);
     textScore.invalidate();
 
-    Unicode::snprintf(highScoreBuffer, HIGHSCORE_SIZE, "%d", highestScore);
+    uint32_t flashHighScore = readHighScoreFromFlash();
+    Unicode::snprintf(highScoreBuffer, HIGHSCORE_SIZE, "%d", flashHighScore);
     highScore.setWildcard1(highScoreBuffer);
     highScore.invalidate();
 
@@ -699,6 +716,7 @@ void Screen1View::handleTickEvent()
         gameOverDelayCounter++;
         if (gameOverDelayCounter >= 300)
         {
+
             if (score > highestScore)
             {
                 highestScore = score;
@@ -724,4 +742,5 @@ void Screen1View::handleTickEvent()
 void Screen1View::gotoGameOverScreen()
 {
     application().gotoScreen3ScreenBlockTransition();
+
 }

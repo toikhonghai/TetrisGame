@@ -5,8 +5,10 @@
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/Bitmap.hpp>
 #include <touchgfx/widgets/Image.hpp>
+#include "stm32f4xx_hal.h"
 
-struct Piece {
+struct Piece
+{
     uint8_t shape[4][4];
     int color;
 };
@@ -39,9 +41,9 @@ public:
     virtual void hardDropPiece();
     virtual void handleTickEvent();
     uint32_t customRandom();
-	void initRandom();
-	int getRandomPiece();
-	void gotoGameOverScreen();
+    void initRandom();
+    int getRandomPiece();
+    void gotoGameOverScreen();
 
 protected:
     int grid[24][10];
@@ -50,7 +52,6 @@ protected:
     Piece tmpPiece;
     int pieceX, pieceY;
     int score;
-    static int highestScore ;
     int fallSpeed;
     int tempFallSpeed;
     bool waitingForSpawn;
@@ -74,6 +75,10 @@ protected:
     touchgfx::Unicode::UnicodeChar textScoreBuffer[TEXTSCORE_SIZE];
     touchgfx::Unicode::UnicodeChar highScoreBuffer[HIGHSCORE_SIZE];
 
+    char bag[7];
+    int bagIndex;
+    void shuffleBag();
+    char getNextPieceFromBag();
 
     void generatePiece(char pieceType);
     void rotateClockwise(uint8_t matrix[4][4]);
@@ -88,5 +93,8 @@ protected:
     void drawBlock(int x, int y, int color);
     void drawNextBlock();
     void adjustFallSpeed();
+
+    static void saveHighScoreToFlash(uint32_t highscore);
+    static uint32_t readHighScoreFromFlash();
 };
 #endif // SCREEN1VIEW_HPP
