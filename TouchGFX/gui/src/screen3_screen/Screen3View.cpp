@@ -1,5 +1,7 @@
 #include <gui/screen3_screen/Screen3View.hpp>
+#include <cmsis_os.h>
 
+extern osMessageQueueId_t myQueue01Handle;
 Screen3View::Screen3View()
 {
 
@@ -17,14 +19,18 @@ void Screen3View::tearDownScreen()
     Screen3ViewBase::tearDownScreen();
 }
 void Screen3View::handleTickEvent(){
-	if (buttonRetryClick == 1)
-	    {
-	        buttonRetryClick = 0;
-	        gotoPlayScreen();
-	    }
-	else if(buttonExitClick == 1){
-		buttonExitClick = 0;
-		gotoHomeScreen();
+	char buttonEvent;
+	if (osMessageQueueGet(myQueue01Handle, &buttonEvent, NULL, 0) == osOK)
+	{
+		switch (buttonEvent)
+		{
+			case 'A': // Retry
+				gotoPlayScreen();
+				break;
+			case 'B': // Exit
+				gotoHomeScreen();
+				break;
+		}
 	}
 }
 void Screen3View::gotoPlayScreen(){

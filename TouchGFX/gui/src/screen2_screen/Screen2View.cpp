@@ -1,5 +1,7 @@
 #include <gui/screen2_screen/Screen2View.hpp>
+#include <cmsis_os.h>
 
+extern osMessageQueueId_t myQueue01Handle;
 Screen2View::Screen2View()
 {
 
@@ -8,7 +10,6 @@ Screen2View::Screen2View()
 void Screen2View::setupScreen()
 {
     Screen2ViewBase::setupScreen();
-    buttonPlayClick = 0;
 
 }
 
@@ -18,11 +19,16 @@ void Screen2View::tearDownScreen()
 }
 void Screen2View::handleTickEvent()
 {
-    if (buttonPlayClick == 1)
-    {
-        buttonPlayClick = 0; // reset cờ tránh bị lặp
-        gotoGameScreen();    // gọi hàm chuyển màn hình
-    }
+	char buttonEvent;
+	if (osMessageQueueGet(myQueue01Handle, &buttonEvent, NULL, 0) == osOK)
+	{
+		switch (buttonEvent)
+		{
+			case 'C':
+				gotoGameScreen();
+				break;
+		}
+	}
 }
 void Screen2View::gotoGameScreen()
 {

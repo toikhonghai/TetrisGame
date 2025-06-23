@@ -1,10 +1,10 @@
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	0	static
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	0	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:15:6:virtual void Screen3View::tearDownScreen()	0	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:17:6:virtual void Screen3View::tearDownScreen()	0	static
 ../../TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp:13:13:Screen3View::~Screen3View()	8	static
 ../../TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp:13:13:virtual Screen3View::~Screen3View()	8	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:3:1:Screen3View::Screen3View()	8	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:30:6:void Screen3View::gotoPlayScreen()	8	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:33:6:void Screen3View::gotoHomeScreen()	8	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:19:6:virtual void Screen3View::handleTickEvent()	0	static
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:8:6:virtual void Screen3View::setupScreen()	8	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:5:1:Screen3View::Screen3View()	8	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:36:6:void Screen3View::gotoPlayScreen()	8	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:39:6:void Screen3View::gotoHomeScreen()	8	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:21:6:virtual void Screen3View::handleTickEvent()	16	static
+C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3View.cpp:10:6:virtual void Screen3View::setupScreen()	8	static

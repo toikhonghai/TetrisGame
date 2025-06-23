@@ -5,6 +5,9 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <main.h>
+#include <cmsis_os.h>
+
+extern osMessageQueueId_t myQueue01Handle;
 
 int Screen1View::highestScore = 0;
 
@@ -20,7 +23,7 @@ Screen1View::Screen1View() {
     pieceY = 0;
     score = 0;
     //highestScore = 0;
-    fallSpeed = 80;
+    fallSpeed = 40;
     tempFallSpeed = fallSpeed;
     waitingForSpawn = false;
     spawnDelayCounter = 0;
@@ -521,31 +524,29 @@ void Screen1View::hardDropPiece(){
 void Screen1View::handleTickEvent(){
     if (!gameOver)
     {
-        if (buttonLeftPressed)
-        {
-            movePieceLeft();
-            buttonLeftPressed = 0;
-        }
-        if (buttonRightPressed)
-        {
-            movePieceRight();
-            buttonRightPressed = 0;
-        }
-        if (buttonRotatePressed)
-        {
-            rotatePiece();
-            buttonRotatePressed = 0;
-        }
-        if (buttonHardDropPressed)
-        {
-            fallSpeed = 5;
-            movePieceDown();
-            buttonHardDropPressed = 0;
-        }
-        else
-        {
-            fallSpeed = tempFallSpeed;
-        }
+    	char buttonEvent;
+		while (osMessageQueueGet(myQueue01Handle, &buttonEvent, NULL, 0) == osOK)
+		{
+			switch (buttonEvent)
+			{
+				case 'A':
+					movePieceLeft();
+					break;
+				case 'B':
+					movePieceRight();
+					break;
+				case 'C':
+					rotatePiece();
+					break;
+				case 'E':
+					fallSpeed = 5;
+					movePieceDown();
+					break;
+			}
+			if (buttonEvent == 'E') {
+				fallSpeed = tempFallSpeed;
+			}
+		}
 
         tickCounter++;
         if (tickCounter >= fallSpeed)

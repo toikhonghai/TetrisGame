@@ -90,6 +90,18 @@ const osThreadAttr_t GUI_Task_attributes = {
   .stack_size = 8192 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for buttonTask */
+osThreadId_t buttonTaskHandle;
+const osThreadAttr_t buttonTask_attributes = {
+  .name = "buttonTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for myQueue01 */
+osMessageQueueId_t myQueue01Handle;
+const osMessageQueueAttr_t myQueue01_attributes = {
+  .name = "myQueue01"
+};
 /* USER CODE BEGIN PV */
 uint8_t isRevD = 0; /* Applicable only for STM32F429I DISCOVERY REVD and above */
 volatile uint8_t buttonLeftPressed = 0;
@@ -114,6 +126,7 @@ static void MX_DMA2D_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void *argument);
 extern void TouchGFX_Task(void *argument);
+void ButtonTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 static void BSP_SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
@@ -212,6 +225,10 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of myQueue01 */
+  myQueue01Handle = osMessageQueueNew (16, sizeof(uint8_t), &myQueue01_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -222,6 +239,9 @@ int main(void)
 
   /* creation of GUI_Task */
   GUI_TaskHandle = osThreadNew(TouchGFX_Task, NULL, &GUI_Task_attributes);
+
+  /* creation of buttonTask */
+  buttonTaskHandle = osThreadNew(ButtonTask, NULL, &buttonTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -668,7 +688,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PB12 PB13 */
   GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -681,50 +701,15 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PD6 PD7 */
   GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	static uint32_t last_press = 0;
-	uint32_t current_time = HAL_GetTick();
-	if (current_time - last_press > 200)
-	{
-		if (GPIO_Pin == GPIO_PIN_12)
-		{
-			buttonLeftPressed = 1;
-			buttonRetryClick = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_13)
-		{
-			buttonRightPressed = 1;
-			buttonExitClick = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_6)
-		{
-			buttonHardDropPressed = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_7)
-		{
-			buttonRotatePressed = 1;
-			buttonPlayClick =1;
-		}
-		last_press = current_time;
-	}
-}
 /**
   * @brief  Perform the SDRAM external memory initialization sequence
   * @param  hsdram: SDRAM handle
@@ -1066,6 +1051,50 @@ void StartDefaultTask(void *argument)
     osDelay(100);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_ButtonTask */
+/**
+* @brief Function implementing the buttonTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ButtonTask */
+void ButtonTask(void *argument)
+{
+  /* USER CODE BEGIN ButtonTask */
+  /* Infinite loop */
+	char lastButton = 0;
+	for(;;)
+	{
+		char buttonEvent = 0;
+		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET) {
+			buttonEvent = 'A'; // Left/Retry
+		}
+		else if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_RESET) {
+			buttonEvent = 'B'; // Right/Exit
+		}
+		else if (HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_6) == GPIO_PIN_RESET) {
+			buttonEvent = 'E'; // Hard Drop
+		}
+		else if (HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_7) == GPIO_PIN_RESET) {
+			buttonEvent = 'C'; // Rotate/Play
+		}
+
+		if (buttonEvent != 0 && buttonEvent != lastButton)
+		{
+			lastButton = buttonEvent;
+			osMessageQueuePut(myQueue01Handle, &buttonEvent, 0, 0);
+		}
+
+		if (buttonEvent == 0)
+		{
+			lastButton = 0;
+		}
+
+		osDelay(10);
+	}
+  /* USER CODE END ButtonTask */
 }
 
 /**

@@ -17,17 +17,17 @@
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:touchgfx::View<Screen3Presenter>::~View()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:357:8:touchgfx::Callback<Screen3ViewBase, const touchgfx::AbstractButton&>::~Callback()	1
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:31:1:Screen3ViewBase::~Screen3ViewBase()	1
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:36:6:virtual void Screen3ViewBase::setupScreen()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:31:1:Screen3ViewBase::~Screen3ViewBase()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:36:6:virtual void Screen3ViewBase::setupScreen()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:386:18:void touchgfx::Callback<dest_type, T1, void, void>::execute(T1) [with dest_type = Screen3ViewBase; T1 = const touchgfx::AbstractButton&]	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:396:18:bool touchgfx::Callback<dest_type, T1, void, void>::isValid() const [with dest_type = Screen3ViewBase; T1 = const touchgfx::AbstractButton&]	3
 ../../Middlewares/ST/touchgfx/framework/include/mvp/View.hpp:36:7:virtual touchgfx::View<Screen3Presenter>::~View()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Callback.hpp:357:8:virtual touchgfx::Callback<Screen3ViewBase, const touchgfx::AbstractButton&>::~Callback()	1
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:31:1:virtual Screen3ViewBase::~Screen3ViewBase()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:31:1:virtual Screen3ViewBase::~Screen3ViewBase()	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:121:18:virtual void touchgfx::Drawable::invalidateContent() const	2
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/Widget.hpp:45:18:virtual void touchgfx::Widget::getLastChild(int16_t, int16_t, touchgfx::Drawable**)	3
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:41:6:void Screen3ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	3
+C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:41:6:void Screen3ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton&)	3
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:343:10:void touchgfx::Drawable::setXY(int16_t, int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:233:10:void touchgfx::Drawable::setPosition(int16_t, int16_t, int16_t, int16_t)	1
 ../../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/AbstractButton.hpp:36:5:touchgfx::AbstractButton::AbstractButton()	1
-D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:8:1:Screen3ViewBase::Screen3ViewBase()	1
+C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp:8:1:Screen3ViewBase::Screen3ViewBase()	1
