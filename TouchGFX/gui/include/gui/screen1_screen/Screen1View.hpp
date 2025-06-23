@@ -1,6 +1,7 @@
 #ifndef SCREEN1VIEW_HPP
 #define SCREEN1VIEW_HPP
 
+#include <stdint.h>
 #include <gui_generated/screen1_screen/Screen1ViewBase.hpp>
 #include <gui/screen1_screen/Screen1Presenter.hpp>
 #include <touchgfx/Bitmap.hpp>

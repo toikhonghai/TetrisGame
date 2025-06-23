@@ -7,6 +7,7 @@
 #include <main.h>
 
 #include <cmsis_os.h>
+#include <stdint.h>
 
 extern osMessageQueueId_t myQueue01Handle;
 
@@ -714,10 +715,10 @@ void Screen1View::handleTickEvent()
         gameOverDelayCounter++;
         if (gameOverDelayCounter >= 300)
         {
-
-            if (score > highestScore)
+            uint32_t flashHighScore = readHighScoreFromFlash();
+            if (score > flashHighScore)
             {
-                highestScore = score;
+                saveHighScoreToFlash(score);
             }
             gotoGameOverScreen();
             //            for(int i = 0; i<24; i++){
@@ -745,8 +746,13 @@ void Screen1View::gotoGameOverScreen()
 uint32_t Screen1View::readHighScoreFromFlash()
 {
     uint32_t value = *(uint32_t *)HIGHSCORE_FLASH_ADDR;
-    // Nếu chưa từng ghi hoặc giá trị bất thường, trả về 0
-    if (value == 0xFFFFFFFF || value > 1000000) // 1 triệu là ngưỡng hợp lý cho highscore
+    if (value == 0xFFFFFFFF || value > 1000000)
         return 0;
     return value;
+}
+
+void Screen1View::saveHighScoreToFlash(uint32_t newHighScore)
+{
+    // Implement the logic to save the new high score to flash
+    // This is a placeholder and should be replaced with the actual implementation
 }
