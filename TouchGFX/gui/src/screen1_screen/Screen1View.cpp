@@ -10,7 +10,6 @@
 
 extern osMessageQueueId_t myQueue01Handle;
 
-
 #ifndef HIGHSCORE_FLASH_ADDR
 #define HIGHSCORE_FLASH_ADDR 0x080E0000 // Sector 11, STM32F429ZIT6
 #endif
@@ -368,7 +367,6 @@ void Screen1View::handleGameLogic()
             waitingForSpawn = true;
             spawnDelayCounter = 0;
             //            score += 1;
-
         }
         movedDown = false;
     }
@@ -742,5 +740,13 @@ void Screen1View::handleTickEvent()
 void Screen1View::gotoGameOverScreen()
 {
     application().gotoScreen3ScreenBlockTransition();
+}
 
+uint32_t Screen1View::readHighScoreFromFlash()
+{
+    uint32_t value = *(uint32_t *)HIGHSCORE_FLASH_ADDR;
+    // Nếu chưa từng ghi hoặc giá trị bất thường, trả về 0
+    if (value == 0xFFFFFFFF || value > 1000000) // 1 triệu là ngưỡng hợp lý cho highscore
+        return 0;
+    return value;
 }
