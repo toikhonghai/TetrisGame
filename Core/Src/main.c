@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under Ultimate Liberty license
+ * SLA0044, the "License"; You may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at:
+ *                             www.st.com/SLA0044
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -34,26 +34,26 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define REFRESH_COUNT           ((uint32_t)1386)   /* SDRAM refresh counter */
-#define SDRAM_TIMEOUT           ((uint32_t)0xFFFF)
+#define REFRESH_COUNT ((uint32_t)1386) /* SDRAM refresh counter */
+#define SDRAM_TIMEOUT ((uint32_t)0xFFFF)
 
 /**
-  * @brief  FMC SDRAM Mode definition register defines
-  */
-#define SDRAM_MODEREG_BURST_LENGTH_1             ((uint16_t)0x0000)
-#define SDRAM_MODEREG_BURST_LENGTH_2             ((uint16_t)0x0001)
-#define SDRAM_MODEREG_BURST_LENGTH_4             ((uint16_t)0x0002)
-#define SDRAM_MODEREG_BURST_LENGTH_8             ((uint16_t)0x0004)
-#define SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL      ((uint16_t)0x0000)
-#define SDRAM_MODEREG_BURST_TYPE_INTERLEAVED     ((uint16_t)0x0008)
-#define SDRAM_MODEREG_CAS_LATENCY_2              ((uint16_t)0x0020)
-#define SDRAM_MODEREG_CAS_LATENCY_3              ((uint16_t)0x0030)
-#define SDRAM_MODEREG_OPERATING_MODE_STANDARD    ((uint16_t)0x0000)
+ * @brief  FMC SDRAM Mode definition register defines
+ */
+#define SDRAM_MODEREG_BURST_LENGTH_1 ((uint16_t)0x0000)
+#define SDRAM_MODEREG_BURST_LENGTH_2 ((uint16_t)0x0001)
+#define SDRAM_MODEREG_BURST_LENGTH_4 ((uint16_t)0x0002)
+#define SDRAM_MODEREG_BURST_LENGTH_8 ((uint16_t)0x0004)
+#define SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL ((uint16_t)0x0000)
+#define SDRAM_MODEREG_BURST_TYPE_INTERLEAVED ((uint16_t)0x0008)
+#define SDRAM_MODEREG_CAS_LATENCY_2 ((uint16_t)0x0020)
+#define SDRAM_MODEREG_CAS_LATENCY_3 ((uint16_t)0x0030)
+#define SDRAM_MODEREG_OPERATING_MODE_STANDARD ((uint16_t)0x0000)
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROGRAMMED ((uint16_t)0x0000)
-#define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE     ((uint16_t)0x0200)
+#define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((uint16_t)0x0200)
 
-#define I2C3_TIMEOUT_MAX                    0x3000 /*<! The value of the maximal timeout for I2C waiting loops */
-#define SPI5_TIMEOUT_MAX                    0x1000
+#define I2C3_TIMEOUT_MAX 0x3000 /*<! The value of the maximal timeout for I2C waiting loops */
+#define SPI5_TIMEOUT_MAX 0x1000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -79,17 +79,28 @@ SDRAM_HandleTypeDef hsdram1;
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+    .name = "defaultTask",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityNormal,
 };
 /* Definitions for GUI_Task */
 osThreadId_t GUI_TaskHandle;
 const osThreadAttr_t GUI_Task_attributes = {
-  .name = "GUI_Task",
-  .stack_size = 8192 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
+    .name = "GUI_Task",
+    .stack_size = 8192 * 4,
+    .priority = (osPriority_t)osPriorityNormal,
 };
+/* Definitions for buttonTask */
+osThreadId_t buttonTaskHandle;
+const osThreadAttr_t buttonTask_attributes = {
+    .name = "buttonTask",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityNormal,
+};
+/* Definitions for myQueue01 */
+osMessageQueueId_t myQueue01Handle;
+const osMessageQueueAttr_t myQueue01_attributes = {
+    .name = "myQueue01"};
 /* USER CODE BEGIN PV */
 uint8_t isRevD = 0; /* Applicable only for STM32F429I DISCOVERY REVD and above */
 volatile uint8_t buttonLeftPressed = 0;
@@ -114,50 +125,49 @@ static void MX_DMA2D_Init(void);
 static void MX_USART1_UART_Init(void);
 void StartDefaultTask(void *argument);
 extern void TouchGFX_Task(void *argument);
+void ButtonTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 static void BSP_SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
 
-
-
-static uint8_t            I2C3_ReadData(uint8_t Addr, uint8_t Reg);
-static void               I2C3_WriteData(uint8_t Addr, uint8_t Reg, uint8_t Value);
-static uint8_t            I2C3_ReadBuffer(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length);
+static uint8_t I2C3_ReadData(uint8_t Addr, uint8_t Reg);
+static void I2C3_WriteData(uint8_t Addr, uint8_t Reg, uint8_t Value);
+static uint8_t I2C3_ReadBuffer(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length);
 
 /* SPIx bus function */
-static void               SPI5_Write(uint16_t Value);
-static uint32_t           SPI5_Read(uint8_t ReadSize);
-static void               SPI5_Error(void);
+static void SPI5_Write(uint16_t Value);
+static uint32_t SPI5_Read(uint8_t ReadSize);
+static void SPI5_Error(void);
 
 /* Link function for LCD peripheral */
-void                      LCD_IO_Init(void);
-void                      LCD_IO_WriteData(uint16_t RegValue);
-void                      LCD_IO_WriteReg(uint8_t Reg);
-uint32_t                  LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize);
-void                      LCD_Delay(uint32_t delay);
+void LCD_IO_Init(void);
+void LCD_IO_WriteData(uint16_t RegValue);
+void LCD_IO_WriteReg(uint8_t Reg);
+uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize);
+void LCD_Delay(uint32_t delay);
 
 /* IOExpander IO functions */
-void                      IOE_Init(void);
-void                      IOE_ITConfig(void);
-void                      IOE_Delay(uint32_t Delay);
-void                      IOE_Write(uint8_t Addr, uint8_t Reg, uint8_t Value);
-uint8_t                   IOE_Read(uint8_t Addr, uint8_t Reg);
-uint16_t                  IOE_ReadMultiple(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length);
+void IOE_Init(void);
+void IOE_ITConfig(void);
+void IOE_Delay(uint32_t Delay);
+void IOE_Write(uint8_t Addr, uint8_t Reg, uint8_t Value);
+uint8_t IOE_Read(uint8_t Addr, uint8_t Reg);
+uint16_t IOE_ReadMultiple(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length);
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static LCD_DrvTypeDef* LcdDrv;
+static LCD_DrvTypeDef *LcdDrv;
 
 uint32_t I2c3Timeout = I2C3_TIMEOUT_MAX; /*<! Value of Timeout when I2C communication fails */
 uint32_t Spi5Timeout = SPI5_TIMEOUT_MAX; /*<! Value of Timeout when SPI communication fails */
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
 
@@ -212,6 +222,10 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of myQueue01 */
+  myQueue01Handle = osMessageQueueNew(16, sizeof(uint8_t), &myQueue01_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -222,6 +236,9 @@ int main(void)
 
   /* creation of GUI_Task */
   GUI_TaskHandle = osThreadNew(TouchGFX_Task, NULL, &GUI_Task_attributes);
+
+  /* creation of buttonTask */
+  buttonTaskHandle = osThreadNew(ButtonTask, NULL, &buttonTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -248,22 +265,22 @@ int main(void)
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
-  */
+   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
   /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+   * in the RCC_OscInitTypeDef structure.
+   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -278,16 +295,15 @@ void SystemClock_Config(void)
   }
 
   /** Activate the Over-Drive mode
-  */
+   */
   if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+   */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
@@ -300,10 +316,10 @@ void SystemClock_Config(void)
 }
 
 /**
-  * @brief CRC Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief CRC Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_CRC_Init(void)
 {
 
@@ -322,14 +338,13 @@ static void MX_CRC_Init(void)
   /* USER CODE BEGIN CRC_Init 2 */
 
   /* USER CODE END CRC_Init 2 */
-
 }
 
 /**
-  * @brief DMA2D Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief DMA2D Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_DMA2D_Init(void)
 {
 
@@ -359,14 +374,13 @@ static void MX_DMA2D_Init(void)
   /* USER CODE BEGIN DMA2D_Init 2 */
 
   /* USER CODE END DMA2D_Init 2 */
-
 }
 
 /**
-  * @brief I2C3 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief I2C3 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_I2C3_Init(void)
 {
 
@@ -392,14 +406,14 @@ static void MX_I2C3_Init(void)
   }
 
   /** Configure Analogue filter
-  */
+   */
   if (HAL_I2CEx_ConfigAnalogFilter(&hi2c3, I2C_ANALOGFILTER_DISABLE) != HAL_OK)
   {
     Error_Handler();
   }
 
   /** Configure Digital filter
-  */
+   */
   if (HAL_I2CEx_ConfigDigitalFilter(&hi2c3, 0) != HAL_OK)
   {
     Error_Handler();
@@ -407,14 +421,13 @@ static void MX_I2C3_Init(void)
   /* USER CODE BEGIN I2C3_Init 2 */
 
   /* USER CODE END I2C3_Init 2 */
-
 }
 
 /**
-  * @brief LTDC Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief LTDC Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_LTDC_Init(void)
 {
 
@@ -467,21 +480,20 @@ static void MX_LTDC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN LTDC_Init 2 */
-    /*Select the device */
+  /*Select the device */
   LcdDrv = &ili9341_drv;
   /* LCD Init */
   LcdDrv->Init();
 
   LcdDrv->DisplayOff();
   /* USER CODE END LTDC_Init 2 */
-
 }
 
 /**
-  * @brief SPI5 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief SPI5 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_SPI5_Init(void)
 {
 
@@ -524,14 +536,13 @@ static void MX_SPI5_Init(void)
     isRevD = 1;
   }
   /* USER CODE END SPI5_Init 2 */
-
 }
 
 /**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief USART1 Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_USART1_UART_Init(void)
 {
 
@@ -555,10 +566,9 @@ static void MX_USART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
-  HAL_UART_Transmit(&huart1, (uint8_t*)"UART initialized\r\n", 17, HAL_MAX_DELAY);
+  HAL_UART_Transmit(&huart1, (uint8_t *)"UART initialized\r\n", 17, HAL_MAX_DELAY);
 
   /* USER CODE END USART1_Init 2 */
-
 }
 
 /* FMC initialization function */
@@ -576,7 +586,7 @@ static void MX_FMC_Init(void)
   /* USER CODE END FMC_Init 1 */
 
   /** Perform the SDRAM1 memory initialization sequence
-  */
+   */
   hsdram1.Instance = FMC_SDRAM_DEVICE;
   /* hsdram1.Init */
   hsdram1.Init.SDBank = FMC_SDRAM_BANK2;
@@ -600,7 +610,7 @@ static void MX_FMC_Init(void)
 
   if (HAL_SDRAM_Init(&hsdram1, &SdramTiming) != HAL_OK)
   {
-    Error_Handler( );
+    Error_Handler();
   }
 
   /* USER CODE BEGIN FMC_Init 2 */
@@ -613,10 +623,10 @@ static void MX_FMC_Init(void)
 }
 
 /**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+ * @brief GPIO Initialization Function
+ * @param None
+ * @retval None
+ */
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -634,7 +644,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, VSYNC_FREQ_Pin|RENDER_TIME_Pin|FRAME_RATE_Pin|MCU_ACTIVE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, VSYNC_FREQ_Pin | RENDER_TIME_Pin | FRAME_RATE_Pin | MCU_ACTIVE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(SPI5_NCS_GPIO_Port, SPI5_NCS_Pin, GPIO_PIN_SET);
@@ -643,10 +653,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12 | GPIO_PIN_13, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : VSYNC_FREQ_Pin RENDER_TIME_Pin FRAME_RATE_Pin MCU_ACTIVE_Pin */
-  GPIO_InitStruct.Pin = VSYNC_FREQ_Pin|RENDER_TIME_Pin|FRAME_RATE_Pin|MCU_ACTIVE_Pin;
+  GPIO_InitStruct.Pin = VSYNC_FREQ_Pin | RENDER_TIME_Pin | FRAME_RATE_Pin | MCU_ACTIVE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -667,79 +677,44 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PB12 PB13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD12 PD13 */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
+  GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD6 PD7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	static uint32_t last_press = 0;
-	uint32_t current_time = HAL_GetTick();
-	if (current_time - last_press > 200)
-	{
-		if (GPIO_Pin == GPIO_PIN_12)
-		{
-			buttonLeftPressed = 1;
-			buttonRetryClick = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_13)
-		{
-			buttonRightPressed = 1;
-			buttonExitClick = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_6)
-		{
-			buttonHardDropPressed = 1;
-		}
-		else if (GPIO_Pin == GPIO_PIN_7)
-		{
-			buttonRotatePressed = 1;
-			buttonPlayClick =1;
-		}
-		last_press = current_time;
-	}
-}
 /**
-  * @brief  Perform the SDRAM external memory initialization sequence
-  * @param  hsdram: SDRAM handle
-  * @param  Command: Pointer to SDRAM command structure
-  * @retval None
-  */
+ * @brief  Perform the SDRAM external memory initialization sequence
+ * @param  hsdram: SDRAM handle
+ * @param  Command: Pointer to SDRAM command structure
+ * @retval None
+ */
 static void BSP_SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command)
 {
- __IO uint32_t tmpmrd =0;
+  __IO uint32_t tmpmrd = 0;
 
   /* Step 1:  Configure a clock configuration enable command */
-  Command->CommandMode             = FMC_SDRAM_CMD_CLK_ENABLE;
-  Command->CommandTarget           = FMC_SDRAM_CMD_TARGET_BANK2;
-  Command->AutoRefreshNumber       = 1;
-  Command->ModeRegisterDefinition  = 0;
+  Command->CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
+  Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command->AutoRefreshNumber = 1;
+  Command->ModeRegisterDefinition = 0;
 
   /* Send the command */
   HAL_SDRAM_SendCommand(hsdram, Command, SDRAM_TIMEOUT);
@@ -749,34 +724,34 @@ static void BSP_SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_S
   HAL_Delay(1);
 
   /* Step 3: Configure a PALL (precharge all) command */
-  Command->CommandMode             = FMC_SDRAM_CMD_PALL;
-  Command->CommandTarget           = FMC_SDRAM_CMD_TARGET_BANK2;
-  Command->AutoRefreshNumber       = 1;
-  Command->ModeRegisterDefinition  = 0;
+  Command->CommandMode = FMC_SDRAM_CMD_PALL;
+  Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command->AutoRefreshNumber = 1;
+  Command->ModeRegisterDefinition = 0;
 
   /* Send the command */
   HAL_SDRAM_SendCommand(hsdram, Command, SDRAM_TIMEOUT);
 
   /* Step 4: Configure an Auto Refresh command */
-  Command->CommandMode             = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-  Command->CommandTarget           = FMC_SDRAM_CMD_TARGET_BANK2;
-  Command->AutoRefreshNumber       = 4;
-  Command->ModeRegisterDefinition  = 0;
+  Command->CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+  Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command->AutoRefreshNumber = 4;
+  Command->ModeRegisterDefinition = 0;
 
   /* Send the command */
   HAL_SDRAM_SendCommand(hsdram, Command, SDRAM_TIMEOUT);
 
   /* Step 5: Program the external memory mode register */
-  tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1          |
-                     SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |
-                     SDRAM_MODEREG_CAS_LATENCY_3           |
-                     SDRAM_MODEREG_OPERATING_MODE_STANDARD |
-                     SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+  tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_1 |
+           SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL |
+           SDRAM_MODEREG_CAS_LATENCY_3 |
+           SDRAM_MODEREG_OPERATING_MODE_STANDARD |
+           SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
 
-  Command->CommandMode             = FMC_SDRAM_CMD_LOAD_MODE;
-  Command->CommandTarget           = FMC_SDRAM_CMD_TARGET_BANK2;
-  Command->AutoRefreshNumber       = 1;
-  Command->ModeRegisterDefinition  = tmpmrd;
+  Command->CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
+  Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+  Command->AutoRefreshNumber = 1;
+  Command->ModeRegisterDefinition = tmpmrd;
 
   /* Send the command */
   HAL_SDRAM_SendCommand(hsdram, Command, SDRAM_TIMEOUT);
@@ -787,73 +762,73 @@ static void BSP_SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_S
 }
 
 /**
-  * @brief  IOE Low Level Initialization.
-  */
+ * @brief  IOE Low Level Initialization.
+ */
 void IOE_Init(void)
 {
-  //Dummy function called when initializing to stmpe811 to setup the i2c.
-  //This is done with cubmx and is therfore not done here.
+  // Dummy function called when initializing to stmpe811 to setup the i2c.
+  // This is done with cubmx and is therfore not done here.
 }
 
 /**
-  * @brief  IOE Low Level Interrupt configuration.
-  */
+ * @brief  IOE Low Level Interrupt configuration.
+ */
 void IOE_ITConfig(void)
 {
-  //Dummy function called when initializing to stmpe811 to setup interupt for the i2c.
-  //The interupt is not used in our case, therefore nothing is done here.
+  // Dummy function called when initializing to stmpe811 to setup interupt for the i2c.
+  // The interupt is not used in our case, therefore nothing is done here.
 }
 
 /**
-  * @brief  IOE Writes single data operation.
-  * @param  Addr: I2C Address
-  * @param  Reg: Reg Address
-  * @param  Value: Data to be written
-  */
+ * @brief  IOE Writes single data operation.
+ * @param  Addr: I2C Address
+ * @param  Reg: Reg Address
+ * @param  Value: Data to be written
+ */
 void IOE_Write(uint8_t Addr, uint8_t Reg, uint8_t Value)
 {
   I2C3_WriteData(Addr, Reg, Value);
 }
 
 /**
-  * @brief  IOE Reads single data.
-  * @param  Addr: I2C Address
-  * @param  Reg: Reg Address
-  * @retval The read data
-  */
+ * @brief  IOE Reads single data.
+ * @param  Addr: I2C Address
+ * @param  Reg: Reg Address
+ * @retval The read data
+ */
 uint8_t IOE_Read(uint8_t Addr, uint8_t Reg)
 {
   return I2C3_ReadData(Addr, Reg);
 }
 
 /**
-  * @brief  IOE Reads multiple data.
-  * @param  Addr: I2C Address
-  * @param  Reg: Reg Address
-  * @param  pBuffer: pointer to data buffer
-  * @param  Length: length of the data
-  * @retval 0 if no problems to read multiple data
-  */
+ * @brief  IOE Reads multiple data.
+ * @param  Addr: I2C Address
+ * @param  Reg: Reg Address
+ * @param  pBuffer: pointer to data buffer
+ * @param  Length: length of the data
+ * @retval 0 if no problems to read multiple data
+ */
 uint16_t IOE_ReadMultiple(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length)
 {
- return I2C3_ReadBuffer(Addr, Reg, pBuffer, Length);
+  return I2C3_ReadBuffer(Addr, Reg, pBuffer, Length);
 }
 
 /**
-  * @brief  IOE Delay.
-  * @param  Delay in ms
-  */
+ * @brief  IOE Delay.
+ * @param  Delay in ms
+ */
 void IOE_Delay(uint32_t Delay)
 {
   HAL_Delay(Delay);
 }
 
 /**
-  * @brief  Writes a value in a register of the device through BUS.
-  * @param  Addr: Device address on BUS Bus.
-  * @param  Reg: The target register address to write
-  * @param  Value: The target register value to be written
-  */
+ * @brief  Writes a value in a register of the device through BUS.
+ * @param  Addr: Device address on BUS Bus.
+ * @param  Reg: The target register address to write
+ * @param  Value: The target register value to be written
+ */
 static void I2C3_WriteData(uint8_t Addr, uint8_t Reg, uint8_t Value)
 {
   HAL_StatusTypeDef status = HAL_OK;
@@ -861,19 +836,19 @@ static void I2C3_WriteData(uint8_t Addr, uint8_t Reg, uint8_t Value)
   status = HAL_I2C_Mem_Write(&hi2c3, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, &Value, 1, I2c3Timeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Re-Initialize the BUS */
-    //I2Cx_Error();
+    // I2Cx_Error();
   }
 }
 
 /**
-  * @brief  Reads a register of the device through BUS.
-  * @param  Addr: Device address on BUS Bus.
-  * @param  Reg: The target register address to write
-  * @retval Data read at register address
-  */
+ * @brief  Reads a register of the device through BUS.
+ * @param  Addr: Device address on BUS Bus.
+ * @param  Reg: The target register address to write
+ * @retval Data read at register address
+ */
 static uint8_t I2C3_ReadData(uint8_t Addr, uint8_t Reg)
 {
   HAL_StatusTypeDef status = HAL_OK;
@@ -882,23 +857,22 @@ static uint8_t I2C3_ReadData(uint8_t Addr, uint8_t Reg)
   status = HAL_I2C_Mem_Read(&hi2c3, Addr, Reg, I2C_MEMADD_SIZE_8BIT, &value, 1, I2c3Timeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Re-Initialize the BUS */
-    //I2Cx_Error();
-
+    // I2Cx_Error();
   }
   return value;
 }
 
 /**
-  * @brief  Reads multiple data on the BUS.
-  * @param  Addr: I2C Address
-  * @param  Reg: Reg Address
-  * @param  pBuffer: pointer to read data buffer
-  * @param  Length: length of the data
-  * @retval 0 if no problems to read multiple data
-  */
+ * @brief  Reads multiple data on the BUS.
+ * @param  Addr: I2C Address
+ * @param  Reg: Reg Address
+ * @param  pBuffer: pointer to read data buffer
+ * @param  Length: length of the data
+ * @retval 0 if no problems to read multiple data
+ */
 static uint8_t I2C3_ReadBuffer(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint16_t Length)
 {
   HAL_StatusTypeDef status = HAL_OK;
@@ -906,33 +880,33 @@ static uint8_t I2C3_ReadBuffer(uint8_t Addr, uint8_t Reg, uint8_t *pBuffer, uint
   status = HAL_I2C_Mem_Read(&hi2c3, Addr, (uint16_t)Reg, I2C_MEMADD_SIZE_8BIT, pBuffer, Length, I2c3Timeout);
 
   /* Check the communication status */
-  if(status == HAL_OK)
+  if (status == HAL_OK)
   {
     return 0;
   }
   else
   {
     /* Re-Initialize the BUS */
-    //I2Cx_Error();
+    // I2Cx_Error();
 
     return 1;
   }
 }
 
 /**
-  * @brief  Reads 4 bytes from device.
-  * @param  ReadSize: Number of bytes to read (max 4 bytes)
-  * @retval Value read on the SPI
-  */
+ * @brief  Reads 4 bytes from device.
+ * @param  ReadSize: Number of bytes to read (max 4 bytes)
+ * @retval Value read on the SPI
+ */
 static uint32_t SPI5_Read(uint8_t ReadSize)
 {
   HAL_StatusTypeDef status = HAL_OK;
   uint32_t readvalue;
 
-  status = HAL_SPI_Receive(&hspi5, (uint8_t*) &readvalue, ReadSize, Spi5Timeout);
+  status = HAL_SPI_Receive(&hspi5, (uint8_t *)&readvalue, ReadSize, Spi5Timeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Re-Initialize the BUS */
     SPI5_Error();
@@ -942,17 +916,17 @@ static uint32_t SPI5_Read(uint8_t ReadSize)
 }
 
 /**
-  * @brief  Writes a byte to device.
-  * @param  Value: value to be written
-  */
+ * @brief  Writes a byte to device.
+ * @param  Value: value to be written
+ */
 static void SPI5_Write(uint16_t Value)
 {
   HAL_StatusTypeDef status = HAL_OK;
 
-  status = HAL_SPI_Transmit(&hspi5, (uint8_t*) &Value, 1, Spi5Timeout);
+  status = HAL_SPI_Transmit(&hspi5, (uint8_t *)&Value, 1, Spi5Timeout);
 
   /* Check the communication status */
-  if(status != HAL_OK)
+  if (status != HAL_OK)
   {
     /* Re-Initialize the BUS */
     SPI5_Error();
@@ -960,15 +934,15 @@ static void SPI5_Write(uint16_t Value)
 }
 
 /**
-  * @brief  SPI5 error treatment function.
-  */
+ * @brief  SPI5 error treatment function.
+ */
 static void SPI5_Error(void)
 {
   /* De-initialize the SPI communication BUS */
-  //HAL_SPI_DeInit(&SpiHandle);
+  // HAL_SPI_DeInit(&SpiHandle);
 
   /* Re- Initialize the SPI communication BUS */
-  //SPIx_Init();
+  // SPIx_Init();
 }
 
 void LCD_IO_Init(void)
@@ -979,8 +953,8 @@ void LCD_IO_Init(void)
 }
 
 /**
-  * @brief  Writes register value.
-  */
+ * @brief  Writes register value.
+ */
 void LCD_IO_WriteData(uint16_t RegValue)
 {
   /* Set WRX to send data */
@@ -995,8 +969,8 @@ void LCD_IO_WriteData(uint16_t RegValue)
 }
 
 /**
-  * @brief  Writes register address.
-  */
+ * @brief  Writes register address.
+ */
 void LCD_IO_WriteReg(uint8_t Reg)
 {
   /* Reset WRX to send command */
@@ -1011,11 +985,11 @@ void LCD_IO_WriteReg(uint8_t Reg)
 }
 
 /**
-  * @brief  Reads register value.
-  * @param  RegValue Address of the register to read
-  * @param  ReadSize Number of bytes to read
-  * @retval Content of the register value
-  */
+ * @brief  Reads register value.
+ * @param  RegValue Address of the register to read
+ * @param  ReadSize Number of bytes to read
+ * @retval Content of the register value
+ */
 uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize)
 {
   uint32_t readvalue = 0;
@@ -1040,9 +1014,9 @@ uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize)
 }
 
 /**
-  * @brief  Wait for loop in ms.
-  * @param  Delay in ms.
-  */
+ * @brief  Wait for loop in ms.
+ * @param  Delay in ms.
+ */
 void LCD_Delay(uint32_t Delay)
 {
   HAL_Delay(Delay);
@@ -1052,30 +1026,78 @@ void LCD_Delay(uint32_t Delay)
 
 /* USER CODE BEGIN Header_StartDefaultTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
-  * @param  argument: Not used
-  * @retval None
-  */
+ * @brief  Function implementing the defaultTask thread.
+ * @param  argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-  for(;;)
+  for (;;)
   {
     osDelay(100);
   }
   /* USER CODE END 5 */
 }
 
+/* USER CODE BEGIN Header_ButtonTask */
 /**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
+ * @brief Function implementing the buttonTask thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_ButtonTask */
+void ButtonTask(void *argument)
+{
+  /* USER CODE BEGIN ButtonTask */
+  /* Infinite loop */
+  char lastButton = 0;
+  for (;;)
+  {
+    char buttonEvent = 0;
+    if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET)
+    {
+      buttonEvent = 'A'; // Left/Retry
+    }
+    else if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_RESET)
+    {
+      buttonEvent = 'B'; // Right/Exit
+    }
+    else if (HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_6) == GPIO_PIN_RESET)
+    {
+      buttonEvent = 'E'; // Hard Drop
+    }
+    else if (HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_7) == GPIO_PIN_RESET)
+    {
+      buttonEvent = 'C'; // Rotate/Play
+    }
+
+    if (buttonEvent != 0 && buttonEvent != lastButton)
+    {
+      lastButton = buttonEvent;
+      osMessageQueuePut(myQueue01Handle, &buttonEvent, 0, 0);
+    }
+
+    if (buttonEvent == 0)
+    {
+      lastButton = 0;
+    }
+
+    osDelay(10);
+  }
+  /* USER CODE END ButtonTask */
+}
+
+/**
+ * @brief  Period elapsed callback in non blocking mode
+ * @note   This function is called  when TIM6 interrupt took place, inside
+ * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+ * a global variable "uwTick" used as application time base.
+ * @param  htim : TIM handle
+ * @retval None
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
@@ -1091,9 +1113,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 }
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
@@ -1102,14 +1124,14 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
