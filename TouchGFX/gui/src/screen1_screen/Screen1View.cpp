@@ -310,7 +310,7 @@ void Screen1View::clearLines()
 
 void Screen1View::adjustFallSpeed()
 {
-    int newFallSpeed = 40 - (score) * 4;
+    int newFallSpeed = 40 - ((score / 4) * 4);
     fallSpeed = newFallSpeed < 10 ? 10 : newFallSpeed;
 }
 
