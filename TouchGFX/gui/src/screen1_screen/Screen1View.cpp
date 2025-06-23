@@ -40,10 +40,11 @@ Screen1View::Screen1View()
     blockCount = 0;
     nextBlockCount = 0;
     check = true;
-    piece = piecePool[getRandomPiece()];
+    shuffleBag();
+    piece = getNextPieceFromBag();
     generatePiece(piece);
     nextPiece = currentPiece;
-    piece = piecePool[getRandomPiece()];
+    piece = getNextPieceFromBag();
     generatePiece(piece);
 }
 
@@ -242,12 +243,37 @@ void Screen1View::savePieceToGrid()
     }
 }
 
+void Screen1View::shuffleBag()
+{
+    for (int i = 0; i < 7; i++)
+    {
+        bag[i] = piecePool[i];
+    }
+    for (int i = 6; i > 0; i--)
+    {
+        int j = customRandom() % (i + 1);
+        char temp = bag[i];
+        bag[i] = bag[j];
+        bag[j] = temp;
+    }
+    bagIndex = 0;
+}
+
+char Screen1View::getNextPieceFromBag()
+{
+    if (bagIndex >= 7)
+    {
+        shuffleBag();
+    }
+    return bag[bagIndex++];
+}
+
 void Screen1View::spawnNewPiece()
 {
     if (check)
     {
         tmpPiece = currentPiece;
-        piece = piecePool[getRandomPiece()];
+        piece = getNextPieceFromBag();
         generatePiece(piece);
         nextPiece = currentPiece;
         currentPiece = tmpPiece;

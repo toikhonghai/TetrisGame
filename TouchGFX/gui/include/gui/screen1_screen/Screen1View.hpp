@@ -75,6 +75,11 @@ protected:
     touchgfx::Unicode::UnicodeChar textScoreBuffer[TEXTSCORE_SIZE];
     touchgfx::Unicode::UnicodeChar highScoreBuffer[HIGHSCORE_SIZE];
 
+    char bag[7];
+    int bagIndex;
+    void shuffleBag();
+    char getNextPieceFromBag();
+
     void generatePiece(char pieceType);
     void rotateClockwise(uint8_t matrix[4][4]);
     void handleGameLogic();
