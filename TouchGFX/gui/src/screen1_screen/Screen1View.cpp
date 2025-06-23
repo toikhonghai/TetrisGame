@@ -5,7 +5,11 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <main.h>
-#include "stm32f4xx_hal.h"
+
+#include <cmsis_os.h>
+
+extern osMessageQueueId_t myQueue01Handle;
+
 
 #ifndef HIGHSCORE_FLASH_ADDR
 #define HIGHSCORE_FLASH_ADDR 0x080E0000 // Sector 11, STM32F429ZIT6
@@ -25,7 +29,10 @@ Screen1View::Screen1View()
     pieceX = 4;
     pieceY = 0;
     score = 0;
-    fallSpeed = 80;
+
+    // highestScore = 0;
+    fallSpeed = 40;
+
     tempFallSpeed = fallSpeed;
     waitingForSpawn = false;
     spawnDelayCounter = 0;
@@ -40,11 +47,12 @@ Screen1View::Screen1View()
     blockCount = 0;
     nextBlockCount = 0;
     check = true;
-    shuffleBag();
-    piece = getNextPieceFromBag();
+
+    piece = piecePool[getRandomPiece()];
     generatePiece(piece);
     nextPiece = currentPiece;
-    piece = getNextPieceFromBag();
+    piece = piecePool[getRandomPiece()];
+
     generatePiece(piece);
 }
 
@@ -243,37 +251,14 @@ void Screen1View::savePieceToGrid()
     }
 }
 
-void Screen1View::shuffleBag()
-{
-    for (int i = 0; i < 7; i++)
-    {
-        bag[i] = piecePool[i];
-    }
-    for (int i = 6; i > 0; i--)
-    {
-        int j = customRandom() % (i + 1);
-        char temp = bag[i];
-        bag[i] = bag[j];
-        bag[j] = temp;
-    }
-    bagIndex = 0;
-}
-
-char Screen1View::getNextPieceFromBag()
-{
-    if (bagIndex >= 7)
-    {
-        shuffleBag();
-    }
-    return bag[bagIndex++];
-}
-
 void Screen1View::spawnNewPiece()
 {
     if (check)
     {
         tmpPiece = currentPiece;
-        piece = getNextPieceFromBag();
+
+        piece = piecePool[getRandomPiece()];
+
         generatePiece(piece);
         nextPiece = currentPiece;
         currentPiece = tmpPiece;
@@ -291,6 +276,11 @@ void Screen1View::spawnNewPiece()
             pieceY = 0;
             waitingForSpawn = false;
             spawnDelayCounter = 0;
+
+            //            piece = piecePool[getRandomPiece()];
+            //            generatePiece(piece);
+            //            nextPiece = currentPiece;
+
             currentPiece = nextPiece;
             if (checkCollision())
             {
@@ -336,7 +326,9 @@ void Screen1View::clearLines()
 
 void Screen1View::adjustFallSpeed()
 {
-    int newFallSpeed = 40 - ((score / 4) * 4);
+
+    int newFallSpeed = 40 - (score) * 4;
+
     fallSpeed = newFallSpeed < 10 ? 10 : newFallSpeed;
 }
 
@@ -375,6 +367,8 @@ void Screen1View::handleGameLogic()
             savePieceToGrid();
             waitingForSpawn = true;
             spawnDelayCounter = 0;
+            //            score += 1;
+
         }
         movedDown = false;
     }
@@ -389,6 +383,8 @@ void Screen1View::handleGameLogic()
         savePieceToGrid();
         waitingForSpawn = true;
         spawnDelayCounter = 0;
+        //        score += 2;
+
         hardDrop = false;
     }
 
@@ -682,30 +678,29 @@ void Screen1View::handleTickEvent()
 {
     if (!gameOver)
     {
-        if (buttonLeftPressed)
+        char buttonEvent;
+        while (osMessageQueueGet(myQueue01Handle, &buttonEvent, NULL, 0) == osOK)
         {
-            movePieceLeft();
-            buttonLeftPressed = 0;
-        }
-        if (buttonRightPressed)
-        {
-            movePieceRight();
-            buttonRightPressed = 0;
-        }
-        if (buttonRotatePressed)
-        {
-            rotatePiece();
-            buttonRotatePressed = 0;
-        }
-        if (buttonHardDropPressed)
-        {
-            fallSpeed = 5;
-            movePieceDown();
-            buttonHardDropPressed = 0;
-        }
-        else
-        {
-            fallSpeed = tempFallSpeed;
+            switch (buttonEvent)
+            {
+            case 'A':
+                movePieceLeft();
+                break;
+            case 'B':
+                movePieceRight();
+                break;
+            case 'C':
+                rotatePiece();
+                break;
+            case 'E':
+                fallSpeed = 5;
+                movePieceDown();
+                break;
+            }
+            if (buttonEvent == 'E')
+            {
+                fallSpeed = tempFallSpeed;
+            }
         }
 
         tickCounter++;
@@ -721,43 +716,31 @@ void Screen1View::handleTickEvent()
         gameOverDelayCounter++;
         if (gameOverDelayCounter >= 300)
         {
-            uint32_t flashHighScore = readHighScoreFromFlash();
-            if (score > (int)flashHighScore)
+
+            if (score > highestScore)
             {
-                saveHighScoreToFlash(score);
+                highestScore = score;
             }
             gotoGameOverScreen();
+            //            for(int i = 0; i<24; i++){
+            //                for(int j = 0; j<10; j++){
+            //                    grid[i][j] = 0;
+            //                }
+            //            }
+            //            pieceX = 4;
+            //            pieceY = 0;
+            //            score = 0;
+            //            gameOver = false;
+            //            waitingForSpawn = true;
+            //            spawnDelayCounter = 0;
+            //            piece = piecePool[3];
+            //            generatePiece(piece);
+            //            updateScreen();
         }
     }
 }
 void Screen1View::gotoGameOverScreen()
 {
     application().gotoScreen3ScreenBlockTransition();
-}
 
-void Screen1View::saveHighScoreToFlash(uint32_t highscore)
-{
-    uint32_t oldScore = readHighScoreFromFlash();
-    if (highscore == oldScore)
-        return; // Không ghi nếu không thay đổi
-    HAL_FLASH_Unlock();
-    // Xóa sector 11 trước khi ghi
-    FLASH_EraseInitTypeDef EraseInitStruct;
-    uint32_t SectorError = 0;
-    EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
-    EraseInitStruct.Sector = FLASH_SECTOR_11;
-    EraseInitStruct.NbSectors = 1;
-    EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
-    HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError);
-    // Ghi highscore (4 byte)
-    HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, HIGHSCORE_FLASH_ADDR, highscore);
-    HAL_FLASH_Lock();
-}
-
-uint32_t Screen1View::readHighScoreFromFlash()
-{
-    uint32_t hs = *(uint32_t *)HIGHSCORE_FLASH_ADDR;
-    if (hs == 0xFFFFFFFF || hs > 999999) // Giá trị chưa từng ghi hoặc bất thường
-        return 0;
-    return hs;
 }
