@@ -832,7 +832,31 @@ uint32_t Screen1View::readHighScoreFromFlash()
 }
 
 void Screen1View::saveHighScoreToFlash(uint32_t newHighScore)
-{
-    // Implement the logic to save the new high score to flash
-    // This is a placeholder and should be replaced with the actual implementation
+	{
+		HAL_StatusTypeDef status;
+		FLASH_EraseInitTypeDef eraseInitStruct;
+		uint32_t sectorError = 0;
+
+		HAL_FLASH_Unlock();
+
+		eraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
+		eraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+		eraseInitStruct.Sector = FLASH_SECTOR_11;
+		eraseInitStruct.NbSectors = 1;
+
+		status = HAL_FLASHEx_Erase(&eraseInitStruct, &sectorError);
+		if (status != HAL_OK)
+		{
+			HAL_FLASH_Lock();
+			return;
+		}
+
+		status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, HIGHSCORE_FLASH_ADDR, newHighScore);
+		if (status != HAL_OK)
+		{
+			HAL_FLASH_Lock();
+			return;
+		}
+
+		HAL_FLASH_Lock();
 }
