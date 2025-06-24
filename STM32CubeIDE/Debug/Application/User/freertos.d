@@ -1,5 +1,5 @@
 Application/User/freertos.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/Core/Src/freertos.c \
+ C:/TouchGFXProjects/TetrisGame/Core/Src/freertos.c \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../../Core/Inc/FreeRTOSConfig.h \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \

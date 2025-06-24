@@ -52,7 +52,7 @@ protected:
     Piece nextPiece;
     Piece tmpPiece;
     int pieceX, pieceY;
-    int score;
+    uint32_t score;
     int fallSpeed;
     int tempFallSpeed;
     bool waitingForSpawn;

@@ -1,5 +1,5 @@
 Application/User/gui/Screen3Presenter.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3Presenter.cpp \
+ C:/TouchGFXProjects/TetrisGame/TouchGFX/gui/src/screen3_screen/Screen3Presenter.cpp \
  ../../TouchGFX/gui/include/gui/screen3_screen/Screen3View.hpp \
  ../../TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp \
  ../../TouchGFX/gui/include/gui/common/FrontendApplication.hpp \

@@ -1,5 +1,5 @@
 Application/User/generated/GeneratedFont.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/fonts/src/GeneratedFont.cpp \
+ C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/fonts/src/GeneratedFont.cpp \
  ../../TouchGFX/generated/fonts/include/fonts/GeneratedFont.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/ConstFont.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Font.hpp \
