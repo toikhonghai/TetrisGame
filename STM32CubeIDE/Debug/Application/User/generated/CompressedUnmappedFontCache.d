@@ -1,5 +1,5 @@
 Application/User/generated/CompressedUnmappedFontCache.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.cpp \
+ D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/TouchGFX/generated/fonts/src/CompressedUnmappedFontCache.cpp \
  ../../TouchGFX/generated/fonts/include/fonts/CompressedUnmappedFontCache.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/FlashDataReader.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp \

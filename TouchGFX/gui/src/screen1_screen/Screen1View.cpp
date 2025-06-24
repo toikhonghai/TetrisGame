@@ -5,15 +5,69 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <main.h>
-
+#include "cstring"
 #include <cmsis_os.h>
 #include <stdint.h>
 
+
 extern osMessageQueueId_t myQueue01Handle;
+extern TIM_HandleTypeDef htim3;
+
+SoundNote gameOverNotes[] = {
+	    {659, 150}, // E5
+	    {587, 150}, // D5
+	    {523, 150}, // C5
+	    {494, 150}, // B4
+	    {440, 150}, // A4
+	    {392, 150}, // G4
+	    {349, 200}, // F4
+	    {392, 300}, // G4
+	    {0,   100}, // nghỉ
+	    {262, 500}  // C4 - kết thúc
+	};
+SoundNote lineClearSound[] = {
+    { 523, 80 },
+    { 659, 80 },
+    { 784, 100 },
+};
+
+size_t screen1NoteIndex = 0;
+bool playingGameOverSequence = false;
 
 #ifndef HIGHSCORE_FLASH_ADDR
 #define HIGHSCORE_FLASH_ADDR 0x080E0000 // Sector 11, STM32F429ZIT6
 #endif
+
+void Screen1View::startSound(uint32_t freq, uint32_t durationMs) {
+    uint32_t period = 1000000 / freq;
+    __HAL_TIM_SET_AUTORELOAD(&htim3, period - 1);
+    __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, period / 2); // 50% duty
+
+    HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
+
+    soundStartTime = HAL_GetTick();
+    soundDuration = durationMs;
+    isPlayingSound = true;
+}
+void Screen1View::playLeftMoveSound() {
+    startSound(600, 30);
+}
+
+void Screen1View::playRightMoveSound() {
+    startSound(700, 30);
+}
+
+void Screen1View::playRotateSound() {
+    startSound(900, 50);
+}
+
+void Screen1View::playHardDropSound() {
+    startSound(400, 80);
+}
+void Screen1View::playGameOverSound() {
+    playingGameOverSequence = true;
+    screen1NoteIndex = 0;
+}
 
 Screen1View::Screen1View()
 {
@@ -82,6 +136,8 @@ void Screen1View::setupScreen()
 {
     Screen1ViewBase::setupScreen();
     updateScreen();
+
+
 }
 
 void Screen1View::tearDownScreen()
@@ -311,12 +367,14 @@ void Screen1View::clearLines()
                 for (int x = 0; x < 10; x++)
                 {
                     grid[yy][x] = grid[yy - 1][x];
+
                 }
             }
             for (int x = 0; x < 10; x++)
             {
                 grid[0][x] = 0;
             }
+            //playLineClearSound();
             score += 1;
             y++;
             adjustFallSpeed();
@@ -684,16 +742,20 @@ void Screen1View::handleTickEvent()
             {
             case 'A':
                 movePieceLeft();
+                playLeftMoveSound();
                 break;
             case 'B':
                 movePieceRight();
+                playRightMoveSound();
                 break;
             case 'C':
                 rotatePiece();
+                playRotateSound();
                 break;
             case 'E':
                 fallSpeed = 5;
                 movePieceDown();
+                playHardDropSound();
                 break;
             }
             if (buttonEvent == 'E')
@@ -712,32 +774,50 @@ void Screen1View::handleTickEvent()
     }
     else
     {
-        gameOverDelayCounter++;
-        if (gameOverDelayCounter >= 300)
+        if (!playingGameOverSequence)
         {
-            uint32_t flashHighScore = readHighScoreFromFlash();
-            if (score > flashHighScore)
+            gameOverDelayCounter++;
+            if (gameOverDelayCounter >= 300)
             {
-                saveHighScoreToFlash(score);
+                // Bắt đầu phát nhạc game over
+                playingGameOverSequence = true;
+                screen1NoteIndex = 0;
+                startSound(gameOverNotes[screen1NoteIndex].freq, gameOverNotes[screen1NoteIndex].duration);
+                screen1NoteIndex;
+
+                // Lưu điểm cao nếu cần
+                uint32_t flashHighScore = readHighScoreFromFlash();
+                if (score > flashHighScore)
+                {
+                    saveHighScoreToFlash(score);
+                }
             }
-            gotoGameOverScreen();
-            //            for(int i = 0; i<24; i++){
-            //                for(int j = 0; j<10; j++){
-            //                    grid[i][j] = 0;
-            //                }
-            //            }
-            //            pieceX = 4;
-            //            pieceY = 0;
-            //            score = 0;
-            //            gameOver = false;
-            //            waitingForSpawn = true;
-            //            spawnDelayCounter = 0;
-            //            piece = piecePool[3];
-            //            generatePiece(piece);
-            //            updateScreen();
+        }
+    }
+
+    // Dừng âm khi hết thời gian
+    if (isPlayingSound && (HAL_GetTick() - soundStartTime >= soundDuration))
+    {
+        HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_2);
+        isPlayingSound = false;
+    }
+
+    // Phát tiếp note trong chuỗi âm thanh game over
+    if (playingGameOverSequence && !isPlayingSound)
+    {
+        if (screen1NoteIndex < (sizeof(gameOverNotes) / sizeof(SoundNote)))
+        {
+            startSound(gameOverNotes[screen1NoteIndex].freq, gameOverNotes[screen1NoteIndex].duration);
+            screen1NoteIndex++;
+        }
+        else
+        {
+            playingGameOverSequence = false;
+            gotoGameOverScreen();  // 👉 CHỈ chuyển màn hình sau khi phát xong
         }
     }
 }
+
 void Screen1View::gotoGameOverScreen()
 {
     application().gotoScreen3ScreenBlockTransition();

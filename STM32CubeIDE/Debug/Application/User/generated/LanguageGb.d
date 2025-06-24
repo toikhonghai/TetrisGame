@@ -1,5 +1,5 @@
 Application/User/generated/LanguageGb.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/texts/src/LanguageGb.cpp \
+ D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/TouchGFX/generated/texts/src/LanguageGb.cpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/Unicode.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Config.hpp

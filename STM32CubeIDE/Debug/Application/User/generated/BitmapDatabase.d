@@ -1,5 +1,5 @@
 Application/User/generated/BitmapDatabase.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/generated/images/src/BitmapDatabase.cpp \
+ D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/TouchGFX/generated/images/src/BitmapDatabase.cpp \
  ../../TouchGFX/generated/images/include/images/BitmapDatabase.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Config.hpp \

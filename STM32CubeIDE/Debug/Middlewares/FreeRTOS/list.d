@@ -1,5 +1,5 @@
 Middlewares/FreeRTOS/list.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/Middlewares/Third_Party/FreeRTOS/Source/list.c \
+ D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/Middlewares/Third_Party/FreeRTOS/Source/list.c \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../../Core/Inc/FreeRTOSConfig.h \
  ../../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \

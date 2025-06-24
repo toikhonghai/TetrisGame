@@ -1,5 +1,5 @@
 Application/User/gui/FrontendApplication.o: \
- D:/TouchGFX/TouchGFXProject/TetrisGame3/TetrisGame/TouchGFX/gui/src/common/FrontendApplication.cpp \
+ D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/TouchGFX/gui/src/common/FrontendApplication.cpp \
  ../../TouchGFX/gui/include/gui/common/FrontendApplication.hpp \
  ../../TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp \
  ../../Middlewares/ST/touchgfx/framework/include/mvp/MVPApplication.hpp \
