@@ -1,5 +1,5 @@
 Application/User/generated/Screen3ViewBase.o: \
- D:/TouchGFX/TouchGFXProject/Tetris\ Game3/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp \
+ C:/TouchGFXProjects/TetrisGame/TouchGFX/generated/gui_generated/src/screen3_screen/Screen3ViewBase.cpp \
  ../../TouchGFX/generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp \
  ../../TouchGFX/gui/include/gui/common/FrontendApplication.hpp \
  ../../TouchGFX/generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp \
