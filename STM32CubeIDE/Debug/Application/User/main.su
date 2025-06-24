@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:922:13:SPI5_Write	16	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1034:6:StartDefaultTask	8	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1052:6:ButtonTask	32	static
@@ -16,3 +17,23 @@ C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:993:10:LCD_IO_ReadData	32	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1020:6:LCD_Delay	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1101:6:HAL_TIM_PeriodElapsedCallback	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1119:6:Error_Handler	0	static
+=======
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1030:13:SPI5_Write	16	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1162:6:StartDefaultTask	8	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1196:6:ButtonTask	32	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:285:6:SystemClock_Config	96	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:183:5:main	120	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:875:6:IOE_Init	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:884:6:IOE_ITConfig	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:896:6:IOE_Write	32	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:907:9:IOE_Read	32	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:920:10:IOE_ReadMultiple	24	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:929:6:IOE_Delay	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1056:6:LCD_IO_Init	8	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1066:6:LCD_IO_WriteData	16	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1082:6:LCD_IO_WriteReg	16	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1101:10:LCD_IO_ReadData	32	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1128:6:LCD_Delay	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1245:6:HAL_TIM_PeriodElapsedCallback	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/main.c:1263:6:Error_Handler	0	static
+>>>>>>> updateSound

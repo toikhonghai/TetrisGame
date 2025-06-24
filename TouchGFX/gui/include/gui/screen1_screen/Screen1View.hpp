@@ -16,6 +16,11 @@ struct Piece
 
 const int colors[7] = {0x00BFFF, 0xFFFF00, 0xFF00FF, 0x00FF00, 0x800080, 0xFF0000, 0x00FFFF};
 const char piecePool[7] = {'Z', 'S', 'L', 'J', 'O', 'T', 'I'};
+struct SoundNote {
+    uint32_t freq;
+    uint32_t duration;
+} ;
+
 
 #define MAX_BLOCKS 300
 #define TEXTSCORE_SIZE 10
@@ -25,6 +30,10 @@ extern volatile uint8_t buttonRightPressed;
 extern volatile uint8_t buttonRotatePressed;
 extern volatile uint8_t buttonHardDropPressed;
 
+//extern SoundNote lineClearSound[];
+extern SoundNote gameOverNotes[10];              // chỉ khai báo
+extern size_t screen1NoteIndex;
+extern bool playingGameOverSequence;
 class Screen1View : public Screen1ViewBase
 {
 public:
@@ -46,6 +55,14 @@ public:
     int getRandomPiece();
     void gotoGameOverScreen();
 
+    void startSound(uint32_t freq, uint32_t durationMs);
+    void playLeftMoveSound();
+    void playRightMoveSound();
+    void playRotateSound();
+    void playHardDropSound();
+    void playGameOverSound();
+    //void playLineClearSound();
+
 protected:
     int grid[24][10];
     Piece currentPiece;
@@ -65,6 +82,10 @@ protected:
     int counter;
     uint32_t randomSeed;
     bool check;
+
+    bool isPlayingSound;
+    uint32_t soundStartTime;
+    uint32_t soundDuration;
 
     // Thêm array blocks và blockCount
     touchgfx::Image blocks[MAX_BLOCKS];

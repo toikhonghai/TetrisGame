@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:73:6:NMI_Handler	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:86:6:HardFault_Handler	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:101:6:MemManage_Handler	0	static
@@ -9,3 +10,15 @@ C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:181:6:EXTI15_10_IRQHandle
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:196:6:TIM6_DAC_IRQHandler	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:210:6:LTDC_IRQHandler	0	static
 C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:224:6:DMA2D_IRQHandler	0	static
+=======
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:74:6:NMI_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:87:6:HardFault_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:102:6:MemManage_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:117:6:BusFault_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:132:6:UsageFault_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:147:6:DebugMon_Handler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:167:6:TIM6_DAC_IRQHandler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:181:6:TIM7_IRQHandler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:195:6:LTDC_IRQHandler	0	static
+C:/TouchGFXProjects/TetrisGame/Core/Src/stm32f4xx_it.c:209:6:DMA2D_IRQHandler	0	static
+>>>>>>> updateSound
